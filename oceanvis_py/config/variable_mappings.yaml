@@ -2,13 +2,13 @@
 # This file defines how to find variables with different naming conventions
 
 temperature:
-  primary: ['temperature', 'temp', 'T']
-  alternative: ['CT', 'conservative_temperature', 'TEMP', 'Temperature']
+  primary: ['CT', 'conservative_temperature', 'temperature', 'temp', 'T']
+  alternative: ['TEMP', 'Temperature']
   units: ['celsius', 'degC', 'degree_C', 'K', 'Celsius']
 
 salinity:
-  primary: ['salinity', 'sal', 'S']
-  alternative: ['SA', 'absolute_salinity', 'SALT', 'Salinity', 'PSAL']
+  primary: ['SA', 'absolute_salinity', 'salinity', 'sal', 'S']
+  alternative: ['SALT', 'Salinity', 'PSAL']
   units: ['psu', '1', 'g/kg', 'PSU']
 
 pressure:
