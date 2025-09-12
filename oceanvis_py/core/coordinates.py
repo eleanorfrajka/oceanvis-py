@@ -7,14 +7,14 @@ for section plots, preserving the uneven spacing of profiles.
 
 import numpy as np
 import xarray as xr
-from geopy.distance import geodesic
+import gsw
 from typing import Union, Tuple, Optional, List
 import warnings
 
 
 def calculate_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     """
-    Calculate great circle distance between two points.
+    Calculate great circle distance between two points using GSW.
 
     Parameters
     ----------
@@ -29,10 +29,12 @@ def calculate_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> fl
         Distance in kilometers
     """
     try:
-        distance = geodesic((lat1, lon1), (lat2, lon2)).kilometers
-        return distance
+        # GSW distance function returns distance in meters
+        distance_m = gsw.distance([lon1, lon2], [lat1, lat2])
+        # Convert to kilometers and return the single distance value
+        return distance_m[0] / 1000.0
     except Exception as e:
-        warnings.warn(f"Error calculating distance: {e}")
+        warnings.warn(f"Error calculating distance: {e}", stacklevel=2)
         return np.nan
 
 

@@ -14,10 +14,10 @@ from oceanvis_py.core.coordinates import (
 
 
 def test_calculate_distance():
-    """Test great circle distance calculation."""
-    # Distance from equator to North Pole should be ~10,000 km
+    """Test great circle distance calculation using GSW."""
+    # Distance from equator to North Pole should be ~10,007 km (GSW result)
     dist = calculate_distance(0, 0, 90, 0)
-    assert abs(dist - 10001.965729) < 1  # Allow small floating point error
+    assert abs(dist - 10007.543398) < 1  # Allow small floating point error
 
     # Distance between same point should be 0
     dist = calculate_distance(45, -30, 45, -30)

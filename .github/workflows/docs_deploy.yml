@@ -1,10 +1,14 @@
 name: Deploy Documentation
 
 on:
-  # This will run after merging a pull request onto main
   push:
     branches:
       - main
+    paths:
+      - '**.py'
+      - '**.ipynb'
+      - '**.rst'
+      - '**.md'
 
 jobs:
   deploy-docs:
@@ -13,45 +17,52 @@ jobs:
       contents: write
 
     steps:
-    - name: Run a one-line script
-      run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+      - name: Setup Micromamba
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          init-shell: bash
+          condarc: |
+            channels:
+              - conda-forge
+            channel_priority: strict
+          cache-environment: true
 
-    # Using channel conda-forge helps deal with pandoc installation issues
-    - name: Setup Micromamba ${{ matrix.python-version }}
-      uses: mamba-org/setup-micromamba@v2.0.1
-      with:
-        environment-name: TEST
-        init-shell: bash
-        create-args: >-
-          python=3 pip
-          --file requirements-dev.txt
-          --channel conda-forge
+      - name: Install package (editable)
+        shell: bash -l {0}
+        run: |
+          micromamba run -n oceanvis-py python -m pip install --upgrade pip
+          micromamba run -n oceanvis-py python -m pip install -e . --no-deps --force-reinstall
 
-    - name: Install template_project
-      shell: bash -l {0}
-      run: |
-        python -m pip install -e . --no-deps --force-reinstall
+      - name: Build documentation
+        shell: bash -l {0}
+        run: |
+          set -e
+          # Convert example notebooks when they exist
+          if [ -f "notebooks/example_section_plot.ipynb" ]; then
+            micromamba run -n oceanvis-py jupyter nbconvert --to notebook --execute notebooks/example_section_plot.ipynb --output=example_section_plot-output.ipynb --ExecutePreprocessor.allow_errors=True
+          fi
+          if [ -f "notebooks/example_map_plot.ipynb" ]; then
+            micromamba run -n oceanvis-py jupyter nbconvert --to notebook --execute notebooks/example_map_plot.ipynb --output=example_map_plot-output.ipynb --ExecutePreprocessor.allow_errors=True
+          fi
+          if [ -f "notebooks/example_interactive_colormaps.ipynb" ]; then
+            micromamba run -n oceanvis-py jupyter nbconvert --to notebook --execute notebooks/example_interactive_colormaps.ipynb --output=example_interactive_colormaps-output.ipynb --ExecutePreprocessor.allow_errors=True
+          fi
+          # Move any output notebooks to docs
+          if ls notebooks/*output.ipynb 1> /dev/null 2>&1; then
+            mv notebooks/*output.ipynb docs/source/
+          fi
+          pushd docs
+          micromamba run -n oceanvis-py make clean html
+          popd
 
-    # Assumes that the notebook to be documented is located within notebooks/ and is called demo.ipynb
-    # In the example below, we've included the `--ExecutePreprocessor.allow_errors=True` flag to allow the notebook to build even if there are errors
-    # For production runs (and when your code is cleaner), you can remove this flag or set it to False.
-    - name: Build documentation
-      shell: bash -l {0}
-      run: |
-        set -e
-        jupyter nbconvert --to notebook --execute notebooks/demo.ipynb --output=demo-output.ipynb --ExecutePreprocessor.allow_errors=True
-        mv notebooks/*output.ipynb docs/source/
-        pushd docs
-        make clean html
-        popd
-
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: docs/build/html
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/build/html
