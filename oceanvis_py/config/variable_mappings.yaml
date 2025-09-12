@@ -1,0 +1,77 @@
+# Variable name mappings for oceanographic data
+# This file defines how to find variables with different naming conventions
+
+temperature:
+  primary: ['temperature', 'temp', 'T']
+  alternative: ['CT', 'conservative_temperature', 'TEMP', 'Temperature']
+  units: ['celsius', 'degC', 'degree_C', 'K', 'Celsius']
+
+salinity:
+  primary: ['salinity', 'sal', 'S']
+  alternative: ['SA', 'absolute_salinity', 'SALT', 'Salinity', 'PSAL']
+  units: ['psu', '1', 'g/kg', 'PSU']
+
+pressure:
+  primary: ['pressure', 'pres', 'P']
+  alternative: ['PRES', 'Pressure', 'PRESSURE']
+  units: ['dbar', 'db', 'Pa', 'decibar']
+
+depth:
+  primary: ['depth', 'DEPTH']
+  alternative: ['Z', 'Depth', 'DEPH']
+  units: ['m', 'meters', 'metre']
+
+latitude:
+  primary: ['latitude', 'lat']
+  alternative: ['LATITUDE', 'LAT', 'Latitude']
+  units: ['degrees_north', 'degree_north', 'degrees_N', 'degree_N']
+
+longitude:
+  primary: ['longitude', 'lon']
+  alternative: ['LONGITUDE', 'LON', 'Longitude']
+  units: ['degrees_east', 'degree_east', 'degrees_E', 'degree_E']
+
+time:
+  primary: ['time', 'TIME']
+  alternative: ['Time', 'time_counter']
+  units: ['seconds since', 'days since', 'hours since']
+
+# Velocity components
+u_velocity:
+  primary: ['u_velocity', 'u', 'U']
+  alternative: ['eastward_velocity', 'EWCT', 'u_component']
+  units: ['m/s', 'cm/s', 'm s-1']
+
+v_velocity:
+  primary: ['v_velocity', 'v', 'V']
+  alternative: ['northward_velocity', 'NSCT', 'v_component']
+  units: ['m/s', 'cm/s', 'm s-1']
+
+# Rotated velocity components (for LADCP)
+u_across:
+  primary: ['u_across', 'u_velocity_rot']
+  alternative: ['u_rotated', 'u_rot']
+  units: ['m/s', 'cm/s', 'm s-1']
+
+v_along:
+  primary: ['v_along', 'v_velocity_rot']
+  alternative: ['v_rotated', 'v_rot']
+  units: ['m/s', 'cm/s', 'm s-1']
+
+# Water depth (bathymetry)
+water_depth:
+  primary: ['water_depth', 'WATER_DEPTH']
+  alternative: ['bathy', 'bathymetry', 'bottom_depth', 'BATHYMETRY']
+  units: ['m', 'meters', 'metre']
+
+# Distance (for towyo data)
+distance:
+  primary: ['distance', 'DISTANCE']
+  alternative: ['dist', 'along_track_distance']
+  units: ['km', 'kilometers', 'm', 'meters']
+
+# Common dimension names
+dimensions:
+  profile: ['N_PROF', 'profile', 'cast', 'station']
+  levels: ['N_LEVELS', 'depth', 'pressure', 'z']
+  measurements: ['N_MEASUREMENTS', 'time', 'obs']

@@ -1,71 +1,120 @@
-# template-project
+# oceanvis-py
 
-> 🧪 A modern Python template for scientific projects — with clean code, automated tests, documentation, citation, and publication tools, ready out-of-the-box.
+> 🌊 A Python package for visualizing physical oceanographic data from netCDF files — specialized for CTD profiles, LADCP velocity data, and publication-quality scientific plots.
 
-This repository is designed to help researchers and developers (especially in the [UHH Experimental Oceanography group](http://eleanorfrajka.com) quickly launch well-structured Python projects with consistent tooling for open science.
-
-📘 Full documentation available at:  
-👉 https://eleanorfrajka.github.io/template-project/
+This package provides tools for creating section plots, bathymetry maps, and interactive colormap exploration for physical oceanographic data, with emphasis on finescale variations like internal waves, temperature/salinity interleaving, and density overturns.
 
 ---
 
 ## 🚀 What's Included
 
-- ✅ Example Python package layout: `template_project/*.py`
-- 📓 Jupyter notebook demo: `notebooks/demo.ipynb`
-- 📄 Markdown and Sphinx-based documentation in `docs/`
-- 🔍 Tests with `pytest` in `tests/`, CI with GitHub Actions
-- 🎨 Code style via `black`, `ruff`, `pre-commit`
-- 📦 Package config via `pyproject.toml` + optional PyPI release workflow
-- 🧾 Machine-readable citation: `CITATION.cff`
+- ✅ **Data Loading**: Robust netCDF file handling with xarray
+- 📊 **Section Plots**: Variable vs distance/pressure plots with nonlinear colorbars
+- 🗺️ **Bathymetry Maps**: Cartopy-based maps with profile tracks
+- 🎨 **Interactive Colormaps**: Jupyter widgets for colormap exploration
+- 🔧 **Coordinate Utilities**: Great circle distance calculations
+- 📐 **Publication Quality**: Predefined figure sizes for scientific papers
+- ⚙️ **Configurable**: YAML-based variable mappings and saved preferences
 
 ---
 
-## Project structure
+## Package Structure
 
-template-project/
-├── .github/
-│   └── workflows/              # GitHub Actions for tests, docs, PyPI
-├── docs/                       # Sphinx-based documentation
-│   ├── source/                 # reStructuredText + MyST Markdown + _static
-│   └── Makefile                # for building HTML docs
-├── notebooks/                  # Example notebooks
-├── template_project/           # Main Python package
-│   ├── __init__.py
-│   ├── _version.py
-│   ├── tools.py
-│   ├── readers.py
-│   ├── writers.py
-│   ├── utilities.py
-│   ├── plotters.py
-│   └── template_project.mplstyle  # Optional: matplotlib style file
-├── tests/                      # Pytest test suite
-│   ├── test_tools.py
-│   └── test_utilities.py
-├── .gitignore
-├── .pre-commit-config.yaml
-├── CITATION.cff                # Sample file for citable software
-├── CONTRIBUTING.md             # Sample file for inviting contributions
-├── LICENSE                     # Sample MIT license
-├── README.md
-├── pyproject.toml              # Modern packaging config
-├── requirements.txt            # Package requirements
-├── customisation_checklist.md  # Development requirements
-└── requirements-dev.txt        # Linting, testing, docs tools
-
+```
+oceanvis_py/
+├── core/
+│   ├── data_loader.py      # netCDF loading and validation
+│   ├── coordinates.py      # lat/lon to distance conversion
+│   └── colormaps.py       # colormap utilities and storage
+├── backends/
+│   ├── matplotlib_backend.py  # matplotlib + cartopy plots
+│   └── pygmt_backend.py       # future pygmt implementation
+├── plots/
+│   ├── sections.py        # section plot functions
+│   ├── maps.py           # bathymetry maps
+│   └── widgets.py        # interactive colormap widgets
+├── config/
+│   ├── variable_mappings.yaml
+│   ├── matplotlib_style.mplstyle
+│   └── saved_colormaps/   # directory for user colormap preferences
+└── examples/
+    ├── example_section_plot.ipynb
+    ├── example_map_plot.ipynb
+    └── example_interactive_colormaps.ipynb
+```
 
 ---
 
-## 🔧 Quickstart
+## 🔧 Installation
 
 Install in development mode:
 
 ```bash
-git clone https://github.com/eleanorfrajka/template-project.git
-cd template-project
+git clone https://github.com/eleanorfrajka/oceanvis-py.git
+cd oceanvis-py
 pip install -r requirements-dev.txt
 pip install -e .
 ```
+
+Or using conda:
+
+```bash
+conda env create -f environment.yml
+conda activate oceanvis-py
+pip install -e .
+```
+
+---
+
+## 📊 Quick Example
+
+```python
+import oceanvis_py as ov
+
+# Load CTD data
+data = ov.load_netcdf('cruise_data.nc')
+
+# Create section plot
+fig, ax = ov.plot_section(
+    data, 
+    variable='temperature',
+    colormap='thermal',
+    bathymetry_file='bathymetry.nc'
+)
+
+# Create bathymetry map
+fig_map, ax_map = ov.plot_map(
+    bathymetry_file='bathymetry.nc',
+    profile_locations=data,
+    contour_intervals=[1000, 2000, 3000]
+)
+```
+
+---
+
+## 🎯 Key Features
+
+### Data Types Supported
+- **CTD Profiles**: Temperature, salinity, pressure data
+- **LADCP Velocity**: u/v velocity components from LADCP instruments  
+- **Towyo Data**: High-resolution sections with distance coordinates
+- **Bathymetry**: Water depth for mapping and section overlays
+
+### Visualization Capabilities
+- **Section Plots**: Emphasize finescale variations with nonlinear colorbars
+- **Map Plots**: Publication-quality bathymetry maps with profile tracks
+- **Interactive Widgets**: Explore colormaps in Jupyter notebooks
+- **Publication Ready**: Predefined figure sizes for scientific papers
+
+### Scientific Focus
+- Internal waves and finescale oceanographic features
+- Temperature/salinity interleaving and mixing processes
+- Density overturns and water mass analysis
+- LADCP velocity structure and ocean circulation
+
+---
+
+## 🧪 Testing
 
 To run tests:
 
@@ -73,40 +122,48 @@ To run tests:
 pytest
 ```
 
-To build the documentation locally:
+To run linting and type checking:
 
 ```bash
-cd docs
-make html
+ruff check .
+black --check .
 ```
 
 ---
 
-## 📚 Learn More
+## 📚 Documentation
 
-- [Setup instructions](https://eleanorfrajka.github.io/template-project/setup.html)
-- [Solo Git workflow](https://eleanorfrajka.github.io/template-project/gitworkflow_solo.html)
-- [Fork-based collaboration](https://eleanorfrajka.github.io/template-project/gitcollab_v2.html)
-- [Building docs](https://eleanorfrajka.github.io/template-project/build_docs.html)
-- [Publishing to PyPI](https://eleanorfrajka.github.io/template-project/pypi_guide.html)
+Full documentation and examples are available in the `notebooks/` directory:
+
+- `example_section_plot.ipynb`: Creating section plots from CTD data
+- `example_map_plot.ipynb`: Bathymetry mapping with profile tracks  
+- `example_interactive_colormaps.ipynb`: Interactive colormap exploration
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome!  Please also consider adding an [issue](https://github.com/eleanorfrajka/template-project/issues) when something isn't clear.
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-See the [customisation checklist](customisation_checklist.md) to adapt this template to your own project.
-
----
-
-## Future plans
-
-I'll also (once I know how) add instructions for how to publish the package to conda forge, so that folks who use conda or mamba for environment management can also install that way.
+Common development tasks:
+- Adding new colormap schemes
+- Supporting additional netCDF variable naming conventions
+- Enhancing publication figure formatting
+- Adding new plot types for oceanographic data
 
 ---
 
 ## 📣 Citation
 
-This repository includes a `CITATION.cff` file so that users of this template can include one in their own project.  
-There is no need to cite this repository directly.
+If you use oceanvis-py in your research, please cite it using the information in [CITATION.cff](CITATION.cff).
+
+---
+
+## 🏗️ Development Status
+
+This package is currently in active development. Core functionality for section plots and data loading is implemented, with ongoing work on:
+
+- Interactive colormap widgets
+- Bathymetry mapping features
+- PyGMT backend support  
+- Extended variable mapping configurations
