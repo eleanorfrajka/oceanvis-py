@@ -7,8 +7,11 @@ Implements section plots with sigma2 contouring and dual subplot functionality.
 import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
-from typing import Tuple, Optional, List
+from pathlib import Path
+from typing import Tuple, Optional, List, Union
+from matplotlib.colors import ListedColormap, BoundaryNorm
 from ..core.colormaps import get_oceanographic_colormap
+from .widgets import calculate_histogram_levels, read_cpt_file
 
 
 def plot_section(
@@ -16,11 +19,15 @@ def plot_section(
     variable: str = "temperature",
     x_coord: str = "distance",
     y_coord: str = "pressure",
-    colormap: Optional[str] = None,
+    colormap: Optional[Union[str, ListedColormap]] = None,
     sigma2_contours: bool = False,
     sigma2_levels: Optional[List[float]] = None,
     figsize: Tuple[float, float] = (10, 6),
     ylims: Optional[Tuple[float, float]] = None,
+    discrete_levels: int = 15,
+    discrete_method: str = "percentile",
+    norm: Optional[BoundaryNorm] = None,
+    cpt_file: Optional[Union[str, Path]] = None,
     **kwargs,
 ) -> Tuple[plt.Figure, plt.Axes]:
     """
@@ -36,8 +43,8 @@ def plot_section(
         X-coordinate variable name (usually distance or time)
     y_coord : str, default 'pressure'
         Y-coordinate variable name (pressure or depth)
-    colormap : str, optional
-        Matplotlib colormap name. If None, uses default for variable
+    colormap : str or ListedColormap, optional
+        Colormap. If None, uses default for variable
     sigma2_contours : bool, default False
         Whether to overlay sigma2 density contours
     sigma2_levels : list of float, optional
@@ -46,6 +53,14 @@ def plot_section(
         Figure size (width, height) in inches
     ylims : tuple, optional
         Y-axis limits (min, max). If None, uses sensible defaults for pressure
+    discrete_levels : int, default 15
+        Number of discrete color levels to use
+    discrete_method : str, default 'percentile'
+        Method for calculating discrete levels ('percentile', 'linear', 'histogram')
+    norm : BoundaryNorm, optional
+        Custom normalization. If None, creates discrete normalization
+    cpt_file : str or Path, optional
+        Path to PyGMT .cpt file. If provided, overrides colormap and norm parameters
     **kwargs
         Additional arguments passed to pcolormesh
 
@@ -54,9 +69,27 @@ def plot_section(
     tuple
         (figure, axes) objects
     """
-    # Get colormap
-    if colormap is None:
-        colormap = get_oceanographic_colormap(variable)
+    # Handle CPT file if provided (overrides other colormap settings)
+    if cpt_file is not None:
+        try:
+            cpt_colormap, cpt_norm, cpt_levels = read_cpt_file(cpt_file)
+            colormap_to_use = cpt_colormap
+            norm_to_use = cpt_norm
+            print(f"✅ Using CPT file: {cpt_file}")
+            print(
+                f"📊 {len(cpt_levels)} level boundaries from {cpt_levels[0]} to {cpt_levels[-1]}"
+            )
+        except Exception as e:
+            print(f"⚠️ Warning: Could not read CPT file {cpt_file}: {e}")
+            print("Falling back to standard colormap...")
+            cpt_file = None  # Fall back to normal processing
+
+    if cpt_file is None:
+        # Get colormap
+        if colormap is None:
+            base_colormap = get_oceanographic_colormap(variable)
+        else:
+            base_colormap = colormap
 
     # Create figure
     fig, ax = plt.subplots(figsize=figsize)
@@ -71,9 +104,39 @@ def plot_section(
     y_data = data[y_coord]
     var_data = data[variable]
 
+    if cpt_file is None:
+        # Create discrete colormap and normalization if not provided
+        if norm is None and not isinstance(base_colormap, ListedColormap):
+            # Calculate discrete levels based on data distribution
+            clean_data = var_data.values[~np.isnan(var_data.values)]
+            levels = calculate_histogram_levels(
+                clean_data, discrete_levels, discrete_method
+            )
+
+            # Create discrete colormap
+            discrete_cmap = ListedColormap(
+                base_colormap(np.linspace(0, 1, discrete_levels))
+            )
+            norm = BoundaryNorm(levels, discrete_levels, extend="neither")
+
+            # Use discrete colormap
+            colormap_to_use = discrete_cmap
+            norm_to_use = norm
+        else:
+            # Use provided colormap and normalization
+            colormap_to_use = base_colormap
+            norm_to_use = norm
+    # Note: if cpt_file was provided, colormap_to_use and norm_to_use are already set above
+
     # Create section plot
     pcm = ax.pcolormesh(
-        x_data, y_data, var_data, cmap=colormap, shading="nearest", **kwargs
+        x_data,
+        y_data,
+        var_data,
+        cmap=colormap_to_use,
+        norm=norm_to_use,
+        shading="nearest",
+        **kwargs,
     )
 
     # Customize axes
