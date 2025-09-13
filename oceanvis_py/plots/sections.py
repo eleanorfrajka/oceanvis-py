@@ -76,12 +76,14 @@ def plot_section(
             colormap_to_use = cpt_colormap
             norm_to_use = cpt_norm
             print(f"✅ Using CPT file: {cpt_file}")
-            print(f"📊 {len(cpt_levels)} level boundaries from {cpt_levels[0]} to {cpt_levels[-1]}")
+            print(
+                f"📊 {len(cpt_levels)} level boundaries from {cpt_levels[0]} to {cpt_levels[-1]}"
+            )
         except Exception as e:
             print(f"⚠️ Warning: Could not read CPT file {cpt_file}: {e}")
             print("Falling back to standard colormap...")
             cpt_file = None  # Fall back to normal processing
-    
+
     if cpt_file is None:
         # Get colormap
         if colormap is None:

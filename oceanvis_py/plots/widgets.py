@@ -87,14 +87,14 @@ def round_to_human_readable(value: float, precision: int = 2) -> float:
 def determine_optimal_precision(data_range: float, n_levels: int) -> int:
     """
     Determine optimal precision for level boundaries based on data range.
-    
+
     Parameters
     ----------
     data_range : float
         Range of the data (max - min)
     n_levels : int
         Number of levels desired
-        
+
     Returns
     -------
     int
@@ -102,7 +102,7 @@ def determine_optimal_precision(data_range: float, n_levels: int) -> int:
     """
     # Calculate the typical step size between levels
     typical_step = data_range / n_levels
-    
+
     # Determine precision needed to represent this step size
     if typical_step >= 1:
         return 0
@@ -156,6 +156,11 @@ def calculate_histogram_levels(
         return np.linspace(0, 1, n_levels + 1)
 
     data_min, data_max = clean_data.min(), clean_data.max()
+
+    # If all data is constant or range is tiny, always return at least [min, max]
+    if np.isclose(data_min, data_max):
+        # If n_levels > 1, return [min, max] (or n_levels+1 identical values if desired)
+        return np.array([data_min, data_max])
 
     if method == "linear":
         levels = np.linspace(data_min, data_max, n_levels + 1)
@@ -214,9 +219,11 @@ def calculate_histogram_levels(
     # Determine optimal precision based on data range and number of levels
     data_range = data_max - data_min
     optimal_precision = determine_optimal_precision(data_range, n_levels)
-    
+
     # Round to human-readable values with adaptive precision
-    levels = np.array([round_to_human_readable(level, optimal_precision) for level in levels])
+    levels = np.array(
+        [round_to_human_readable(level, optimal_precision) for level in levels]
+    )
 
     # Ensure levels are strictly increasing
     levels = np.unique(levels)
@@ -224,7 +231,9 @@ def calculate_histogram_levels(
     # If we lost levels due to rounding, interpolate to get back to n_levels
     if len(levels) < n_levels + 1:
         levels = np.linspace(levels[0], levels[-1], n_levels + 1)
-        levels = np.array([round_to_human_readable(level, optimal_precision) for level in levels])
+        levels = np.array(
+            [round_to_human_readable(level, optimal_precision) for level in levels]
+        )
         levels = np.unique(levels)
 
     return levels
@@ -238,51 +247,56 @@ def rgb_to_hex(rgb):
 
 def hex_to_rgb(hex_color):
     """Convert hex color string to RGB values (0-1 range)."""
-    hex_color = hex_color.lstrip('#')
-    return tuple(int(hex_color[i:i+2], 16) / 255.0 for i in (0, 2, 4))
+    hex_color = hex_color.lstrip("#")
+    return tuple(int(hex_color[i : i + 2], 16) / 255.0 for i in (0, 2, 4))
 
 
 def read_cpt_file(cpt_file: Union[str, Path]) -> tuple:
     """
     Read a PyGMT .cpt file and return colormap and normalization.
-    
+
     Parameters
     ----------
     cpt_file : str or Path
         Path to the .cpt file
-        
+
     Returns
     -------
     tuple
         (colormap, norm, levels) where:
         - colormap is a matplotlib ListedColormap
-        - norm is a matplotlib BoundaryNorm  
+        - norm is a matplotlib BoundaryNorm
         - levels is the array of level boundaries
-        
+
     Examples
     --------
     >>> cmap, norm, levels = read_cpt_file('salinity.cpt')
     >>> plt.pcolormesh(x, y, data, cmap=cmap, norm=norm)
     """
     cpt_file = Path(cpt_file)
-    
+
     if not cpt_file.exists():
         raise FileNotFoundError(f"CPT file not found: {cpt_file}")
-    
+
     levels = []
     colors = []
-    
-    with open(cpt_file, 'r') as f:
+
+    with open(cpt_file, "r") as f:
         for line in f:
             line = line.strip()
-            
+
             # Skip comments and special lines
-            if line.startswith('#') or line.startswith('B') or line.startswith('F') or line.startswith('N'):
+            if (
+                line.startswith("#")
+                or line.startswith("B")
+                or line.startswith("F")
+                or line.startswith("N")
+            ):
                 continue
-                
+
             if not line:
                 continue
-                
+
             # Parse color interval line: "lower_val #color upper_val #color"
             parts = line.split()
             if len(parts) >= 4:
@@ -290,31 +304,31 @@ def read_cpt_file(cpt_file: Union[str, Path]) -> tuple:
                 lower_color = parts[1]
                 upper_val = float(parts[2])
                 upper_color = parts[3]
-                
+
                 # For the first interval, add the lower boundary and color
                 if not levels:
                     levels.append(lower_val)
-                
+
                 # Always add the upper boundary
                 levels.append(upper_val)
-                
+
                 # Each interval gets one color (we'll use the color for that interval)
                 colors.append(hex_to_rgb(lower_color))
-    
+
     if not levels or not colors:
         raise ValueError(f"No valid color intervals found in CPT file: {cpt_file}")
-    
+
     # Create matplotlib colormap and normalization
     levels = np.array(levels)
     n_intervals = len(colors)
-    
+
     # Create discrete colormap
     discrete_cmap = ListedColormap(colors)
-    
+
     # Create boundary normalization
     # BoundaryNorm expects n_boundaries for n_intervals colors
-    norm = BoundaryNorm(levels, n_intervals, extend='neither')
-    
+    norm = BoundaryNorm(levels, n_intervals, extend="neither")
+
     return discrete_cmap, norm, levels
 
 
@@ -324,11 +338,11 @@ def generate_cpt_file(
     output_file: Union[str, Path],
     background_color: str = None,
     foreground_color: str = None,
-    nan_color: str = "#ffffff"
+    nan_color: str = "#ffffff",
 ) -> None:
     """
     Generate a PyGMT-compatible .cpt (color palette table) file.
-    
+
     Parameters
     ----------
     levels : np.ndarray
@@ -343,57 +357,57 @@ def generate_cpt_file(
         Hex color for foreground (F). If None, uses last color
     nan_color : str, default "#ffffff"
         Hex color for NaN values (N)
-        
+
     Examples
     --------
     >>> from oceanvis_py.plots.widgets import calculate_histogram_levels, generate_cpt_file
     >>> from oceanvis_py.core.custom_colormaps import CUSTOM_COLORMAPS
-    >>> 
+    >>>
     >>> # Calculate levels for your data
     >>> levels = calculate_histogram_levels(salinity_data, 19, 'percentile')
-    >>> 
+    >>>
     >>> # Generate CPT file
     >>> generate_cpt_file(levels, CUSTOM_COLORMAPS['SAL'], 'salinity.cpt')
     """
     output_file = Path(output_file)
-    
+
     # Calculate colors for each level interval
     n_intervals = len(levels) - 1
     color_positions = np.linspace(0, 1, n_intervals)
     colors = [colormap(pos) for pos in color_positions]
-    
+
     # Convert to hex
     hex_colors = [rgb_to_hex(color[:3]) for color in colors]  # Only RGB, ignore alpha
-    
+
     # Set background and foreground colors if not provided
     if background_color is None:
         background_color = hex_colors[0]
     if foreground_color is None:
         foreground_color = hex_colors[-1]
-    
+
     # Write CPT file
-    with open(output_file, 'w') as f:
+    with open(output_file, "w") as f:
         # Write header comment
-        f.write(f"# PyGMT Color Palette Table generated by oceanvis-py\n")
+        f.write("# PyGMT Color Palette Table generated by oceanvis-py\n")
         f.write(f"# Colormap: {getattr(colormap, 'name', 'custom')}\n")
         f.write(f"# Levels: {len(levels)} boundaries, {n_intervals} intervals\n")
         f.write(f"# Range: {levels[0]} to {levels[-1]}\n")
         f.write("#\n")
-        
+
         # Write color intervals
         for i in range(n_intervals):
             lower = levels[i]
             upper = levels[i + 1]
             color = hex_colors[i]
-            
+
             # CPT format: lower_val color upper_val color
             f.write(f"{lower} {color} {upper} {color}\n")
-        
+
         # Write background, foreground, and NaN colors
         f.write(f"B {background_color}\n")
-        f.write(f"F {foreground_color}\n") 
+        f.write(f"F {foreground_color}\n")
         f.write(f"N {nan_color}\n")
-    
+
     print(f"CPT file saved to: {output_file}")
     print(f"Contains {n_intervals} color intervals from {levels[0]} to {levels[-1]}")
 
@@ -736,7 +750,7 @@ norm = BoundaryNorm(levels, {n_levels}, extend='{extend}')
             n_levels = self.n_levels_slider.value
             method = self.norm_method_dropdown.value
             tail_compression = self.tail_compression_slider.value
-            
+
             # Calculate current levels
             if method == "compressed_percentile":
                 levels = calculate_histogram_levels(
@@ -744,31 +758,36 @@ norm = BoundaryNorm(levels, {n_levels}, extend='{extend}')
                 )
             else:
                 levels = calculate_histogram_levels(self.clean_data, n_levels, method)
-            
+
             # Get colormap
             cmap = self.available_colormaps[colormap_name]
-            
+
             # Generate clean filename (remove problematic characters)
             import re
-            clean_var_name = re.sub(r'[^\w\-_]', '', self.variable_name.replace(" ", "_")).lower()
+
+            clean_var_name = re.sub(
+                r"[^\w\-_]", "", self.variable_name.replace(" ", "_")
+            ).lower()
             filename = f"{clean_var_name}_{colormap_name}_{n_levels}levels.cpt"
-            
+
             # Create output directory if it doesn't exist
             # Use relative path from module location
             output_dir = Path(__file__).parent.parent / "config" / "saved_colormaps"
             output_dir.mkdir(parents=True, exist_ok=True)
-            
+
             # Full file path
             full_path = output_dir / filename
-            
+
             # Generate CPT file
             try:
                 generate_cpt_file(levels, cmap, full_path)
-                print(f"\n✅ CPT file generated successfully!")
+                print("\n✅ CPT file generated successfully!")
                 print(f"📁 File: {full_path}")
                 print(f"🎨 Colormap: {colormap_name}")
-                print(f"📊 {len(levels)-1} color intervals from {levels[0]} to {levels[-1]}")
-                print(f"\nTo use in PyGMT:")
+                print(
+                    f"📊 {len(levels)-1} color intervals from {levels[0]} to {levels[-1]}"
+                )
+                print("\nTo use in PyGMT:")
                 print(f"fig.grdimage(grid, cmap='{full_path}')")
             except Exception as e:
                 print(f"❌ Error generating CPT file: {e}")

@@ -58,7 +58,7 @@ def get_oceanographic_colormap(variable: str = "temperature"):
                 "v_velocity": cmocean.cm.balance,
                 "u_across": cmocean.cm.balance,
                 "v_along": cmocean.cm.balance,
-                "pressure": cmocean.cm.deep,
+                "pressure": CUSTOM_COLORMAPS["TOPO"],
             }
         )
     else:

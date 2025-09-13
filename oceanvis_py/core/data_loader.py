@@ -237,7 +237,7 @@ def get_data_info(dataset: xr.Dataset) -> Dict:
         Information about the dataset structure and content
     """
     info = {
-        "dimensions": dict(dataset.dims),
+        "dimensions": dict(dataset.sizes),
         "coordinates": list(dataset.coords.keys()),
         "data_variables": list(dataset.data_vars.keys()),
         "global_attributes": dict(dataset.attrs),
