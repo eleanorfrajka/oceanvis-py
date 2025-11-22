@@ -29,12 +29,12 @@ class TestGetOceanographicColormap:
         temp_vars = ["temperature", "CT", "conservative_temperature"]
 
         for var in temp_vars:
-                cmap = get_oceanographic_colormap(var)
-                if CMOCEAN_AVAILABLE:
-                    assert hasattr(cmap, "name")
-                    assert cmap.name == "TEMP2"
-                else:
-                    assert cmap == "RdYlBu_r"
+            cmap = get_oceanographic_colormap(var)
+            if CMOCEAN_AVAILABLE:
+                assert hasattr(cmap, "name")
+                assert cmap.name == "TEMP2"
+            else:
+                assert cmap == "RdYlBu_r"
 
     def test_salinity_variables(self):
         """Test colormap selection for salinity variables."""
@@ -142,7 +142,8 @@ class TestColormapIntegration:
         """Test that returned colormaps work with matplotlib pcolormesh."""
         import numpy as np
         import matplotlib
-        matplotlib.use('Agg')
+
+        matplotlib.use("Agg")
         plt.ioff()
 
         # Create simple test data
@@ -165,7 +166,7 @@ class TestColormapIntegration:
             plt.colorbar(pcm, ax=ax)
 
             plt.close(fig)
-        plt.close('all')
+        plt.close("all")
 
     def test_colormap_color_range(self):
         """Test that colormaps return valid color values."""

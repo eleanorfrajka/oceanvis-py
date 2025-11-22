@@ -19,4 +19,4 @@ PyYAML>=6.0
 gsw>=3.4.0
 
 # Optional for future pygmt backend
-# pygmt>=0.9.0
+pygmt>=0.9.0

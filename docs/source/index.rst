@@ -1,63 +1,35 @@
-.. template-project documentation master file
+.. oceanvis-py documentation master file
 
-====================================
-Template Project: Documentation Hub
-====================================
+=====================================
+OceanVis-Py: Oceanographic Visualization
+=====================================
 
-Welcome to the documentation for the **template-project** — a minimal, modern Python project template designed for research groups and scientific code development.
+Welcome to **oceanvis-py** — a Python package for creating publication-quality visualizations from physical oceanographic datasets.
 
-This template includes tools for testing, documentation, versioning, citation, publishing to PyPI, and more. Whether you're working solo or collaborating in a team, this guide will help you get started and stay consistent.
+This package provides tools for plotting CTD sections, LADCP velocity data, bathymetry maps, and more. With support for multiple backends and interactive colormap selection, oceanvis-py helps you create professional oceanographic figures for papers and presentations.
 
 .. toctree::
    :maxdepth: 2
    :caption: Getting started
 
    setup.md
-   customisation_checklist.md
-   project_structure.md
 
 .. toctree::
    :maxdepth: 2
-   :caption: GitHub basics
-
-   github_intro.md
-   gitworkflow_solo.md
-   gitcollab.md
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Development Guide
-
-   style_guide.md
-   writing_tests.md
-   build_docs.md
-   precommit_guide.md
-   actions_overview.md
-
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Project Management
-
-   citation_guide.md
-   pypi_guide.md
-   gitorg_transfer.md
-
-.. toctree::
-   :maxdepth: 3
-   :caption: Users' guide
+   :caption: Usage Examples
 
    demo-output.ipynb
 
+.. toctree::
+   :maxdepth: 2
+   :caption: API Reference
 
+   oceanvis_py
 
 .. toctree::
    :maxdepth: 2
    :caption: Help and reference
 
-   GitHub Repo <http://github.com/eleanorfrajka/template-project>
-   template_project
-   faq
+   GitHub Repo <https://github.com/eleanorfrajka/oceanvis-py>
 
-These documentation pages were created based on processes used to develop and maintain http://github.com/OceanGlidersCommunity/glidertest and edited using chatGPT.
+OceanVis-Py is designed for physical oceanographers working with standard oceanographic data formats (netCDF) and needing publication-ready visualizations.
