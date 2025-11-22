@@ -21,8 +21,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Customisation Checklist for New Projects" href="customisation_checklist.html" />
-    <link rel="prev" title="Template Project: Documentation Hub" href="index.html" /> 
+    <link rel="next" title="oceanvis_py API" href="oceanvis_py.html" />
+    <link rel="prev" title="OceanVis-Py: Oceanographic Visualization" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,55 +48,47 @@
               <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started: Setup and Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#step-1-get-the-repository">Step 1: Get the Repository</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#option-a-use-this-template-for-your-own-project">Option A: Use this template for your own project</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#a-clone-the-repository-to-your-computer">a. Clone the repository to your computer</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#b-optional-change-the-remote-origin">b. (Optional) Change the remote origin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-installation-options">Step 1: Installation Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-from-github-repository">Install from GitHub Repository</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#a-clone-the-repository">a. Clone the repository</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#b-contributing-to-the-project">b. Contributing to the project</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#option-b-contribute-to-someone-else-s-project">Option B: Contribute to someone else’s project</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#step-2-set-up-a-python-environment">Step 2: Set Up a Python Environment</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#option-a-use-venv-and-pip">Option A: Use <code class="docutils literal notranslate"><span class="pre">venv</span></code> and <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#option-a-using-conda-mamba-recommended">Option A: Using conda/mamba (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#option-b-using-venv-and-pip">Option B: Using venv and pip</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#step-3-install-the-package-editable-mode">Step 3: Install the Package (Editable Mode)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-4-test-that-it-works">Step 4: Test That It Works</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#optional-use-github-desktop-instead-of-terminal">Optional: Use GitHub Desktop Instead of Terminal</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#git-workflows">Git Workflows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#you-re-all-set">You’re All Set!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-3-install-the-package">Step 3: Install the Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-4-verify-installation">Step 4: Verify Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-test-suite-development">Run the Test Suite (Development)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#try-an-example">Try an Example</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="customisation_checklist.html">Customisation Checklist for New Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="project_structure.html">What’s in This Template Project?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="project_structure.html#template-project-file-structure">📁 <code class="docutils literal notranslate"><span class="pre">template-project</span></code> File Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common-installation-issues">Common Installation Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vscode-setup">VSCode Setup</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">GitHub basics</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="github_intro.html">Getting Started with GitHub</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gitworkflow_solo.html">Solo Git Workflow for Your Project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gitcollab.html">Collaborating on Someone Else’s Repository</a></li>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#for-users">For Users</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#for-contributors">For Contributors</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Development Guide</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="style_guide.html">Project Style Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="writing_tests.html">Writing and Running Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="build_docs.html">Building Documentation Locally</a></li>
-<li class="toctree-l1"><a class="reference internal" href="precommit_guide.html">Setting Up Pre-commit Hooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="actions_overview.html">GitHub Actions: Automating Your Project</a></li>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#you-re-ready-to-visualize">You’re Ready to Visualize!</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Project Management</span></p>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="citation_guide.html">How to Cite This Project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pypi_guide.html">Publishing Your Project to PyPI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gitorg_transfer.html">Transferring a Repository to an Organisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oceanvis_py.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">oceanvis_py</span> <span class="pre">API</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Help and reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="http://github.com/eleanorfrajka/template-project">GitHub Repo</a></li>
-<li class="toctree-l1"><a class="reference internal" href="template_project.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">template_project</span> <span class="pre">API</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ / Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/eleanorfrajka/oceanvis-py">GitHub Repo</a></li>
 </ul>
 
         </div>
@@ -125,114 +117,161 @@
              
   <section id="getting-started-setup-and-installation">
 <h1>Getting Started: Setup and Installation<a class="headerlink" href="#getting-started-setup-and-installation" title="Link to this heading"></a></h1>
-<p>This guide walks you through the setup process when starting a new project using this template, or contributing to one based on it. It includes instructions for both terminal users and those using GitHub Desktop.</p>
+<p>This guide walks you through installing and setting up oceanvis-py for oceanographic data visualization. Since the package is in active development, you’ll install directly from the GitHub repository.</p>
 <hr class="docutils" />
-<section id="step-1-get-the-repository">
-<h2>Step 1: Get the Repository<a class="headerlink" href="#step-1-get-the-repository" title="Link to this heading"></a></h2>
-<p>You have two choices, depending on whether you’re making a copy for your own use or contributing to someone else’s.</p>
-<section id="option-a-use-this-template-for-your-own-project">
-<h3>Option A: Use this template for your own project<a class="headerlink" href="#option-a-use-this-template-for-your-own-project" title="Link to this heading"></a></h3>
-<p>You’re making a fresh project based on this template.</p>
-<section id="a-clone-the-repository-to-your-computer">
-<h4>a. Clone the repository to your computer<a class="headerlink" href="#a-clone-the-repository-to-your-computer" title="Link to this heading"></a></h4>
+<section id="step-1-installation-options">
+<h2>Step 1: Installation Options<a class="headerlink" href="#step-1-installation-options" title="Link to this heading"></a></h2>
+<p>Currently, oceanvis-py is in development and not yet published to PyPI. You’ll need to install from the GitHub repository.</p>
+<section id="install-from-github-repository">
+<h3>Install from GitHub Repository<a class="headerlink" href="#install-from-github-repository" title="Link to this heading"></a></h3>
+<section id="a-clone-the-repository">
+<h4>a. Clone the repository<a class="headerlink" href="#a-clone-the-repository" title="Link to this heading"></a></h4>
 <p>From a <strong>terminal</strong>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/eleanorfrajka/template-project
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/eleanorfrajka/oceanvis-py
+<span class="nb">cd</span><span class="w"> </span>oceanvis-py
 </pre></div>
 </div>
-<p>Or in your <strong>browser</strong>:</p>
+<p>Or using <strong>GitHub Desktop</strong>:</p>
 <ol class="arabic simple">
-<li><p>Navigate to <a class="reference external" href="https://github.com/eleanorfrajka/template-project">https://github.com/eleanorfrajka/template-project</a></p></li>
-<li><p>Click the green <code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span> <span class="pre">Code</span></code> button.</p></li>
-<li><p>Choose <strong>Open with GitHub Desktop</strong>.</p></li>
+<li><p>Navigate to <a class="reference external" href="https://github.com/eleanorfrajka/oceanvis-py">https://github.com/eleanorfrajka/oceanvis-py</a></p></li>
+<li><p>Click the green <code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span> <span class="pre">Code</span></code> button</p></li>
+<li><p>Choose <strong>Open with GitHub Desktop</strong></p></li>
 </ol>
-<blockquote>
-<div><p>💡 You can rename the folder after cloning.</p>
-</div></blockquote>
 </section>
-<section id="b-optional-change-the-remote-origin">
-<h4>b. (Optional) Change the remote origin<a class="headerlink" href="#b-optional-change-the-remote-origin" title="Link to this heading"></a></h4>
-<p>If you want to push to your own GitHub repository, create a new repo on <a class="reference external" href="https://github.com">GitHub.com</a> and set it as the remote:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>set-url<span class="w"> </span>origin<span class="w"> </span>https://github.com/YOUR_USERNAME/new-repo-name.git
-git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>main
-</pre></div>
-</div>
+<section id="b-contributing-to-the-project">
+<h4>b. Contributing to the project<a class="headerlink" href="#b-contributing-to-the-project" title="Link to this heading"></a></h4>
+<p>See the contributing guide for full instructions on forking, branching, and submitting pull requests.</p>
 </section>
-</section>
-<section id="option-b-contribute-to-someone-else-s-project">
-<h3>Option B: Contribute to someone else’s project<a class="headerlink" href="#option-b-contribute-to-someone-else-s-project" title="Link to this heading"></a></h3>
-<p>See <a class="reference internal" href="#gitcollab_v2.md"><span class="xref myst">Git Collaboration</span></a> for full instructions on forking and branching when contributing to another repository.</p>
 </section>
 </section>
 <hr class="docutils" />
 <section id="step-2-set-up-a-python-environment">
 <h2>Step 2: Set Up a Python Environment<a class="headerlink" href="#step-2-set-up-a-python-environment" title="Link to this heading"></a></h2>
-<p>We recommend using a clean Python environment with <code class="docutils literal notranslate"><span class="pre">micromamba</span></code>, <code class="docutils literal notranslate"><span class="pre">conda</span></code>, <code class="docutils literal notranslate"><span class="pre">venv</span></code>, or similar. Below is the example using <code class="docutils literal notranslate"><span class="pre">venv</span></code>.</p>
-<!---
-### Option A: Use `micromamba` (recommended for reproducibility)
-If you're using `micromamba`, create an environment from the included YAML file:
-```bash
-micromamba create -f environment.yml
-micromamba activate template_env
-```
---->
-<section id="option-a-use-venv-and-pip">
-<h3>Option A: Use <code class="docutils literal notranslate"><span class="pre">venv</span></code> and <code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#option-a-use-venv-and-pip" title="Link to this heading"></a></h3>
+<p>We recommend using a clean Python environment. Oceanvis-py requires Python 3.9+ and has specific dependencies for scientific computing.</p>
+<section id="option-a-using-conda-mamba-recommended">
+<h3>Option A: Using conda/mamba (Recommended)<a class="headerlink" href="#option-a-using-conda-mamba-recommended" title="Link to this heading"></a></h3>
+<p>Conda handles the complex scientific dependencies more reliably:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>oceanvis<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11
+conda<span class="w"> </span>activate<span class="w"> </span>oceanvis
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>matplotlib<span class="w"> </span>cartopy<span class="w"> </span>xarray<span class="w"> </span>netcdf4<span class="w"> </span>cmocean
+
+<span class="c1"># For development</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-dev.txt
+</pre></div>
+</div>
+</section>
+<section id="option-b-using-venv-and-pip">
+<h3>Option B: Using venv and pip<a class="headerlink" href="#option-b-using-venv-and-pip" title="Link to this heading"></a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
-<span class="nb">source</span><span class="w"> </span>venv/bin/activate<span class="w">  </span><span class="c1"># On Windows use `venv\Scripts\activate`</span>
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate<span class="w">  </span><span class="c1"># On Windows: venv\Scripts\activate</span>
 pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-dev.txt<span class="w">  </span><span class="c1"># For development tools and testing</span>
+
+<span class="c1"># For development</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-dev.txt
 </pre></div>
 </div>
 <blockquote>
-<div><p>🔁 These install all runtime and development dependencies.</p>
+<div><p>⚠️ <strong>Note</strong>: Some dependencies (especially cartopy) can be challenging to install with pip alone. Conda is recommended for easier setup.</p>
 </div></blockquote>
 </section>
 </section>
 <hr class="docutils" />
-<section id="step-3-install-the-package-editable-mode">
-<h2>Step 3: Install the Package (Editable Mode)<a class="headerlink" href="#step-3-install-the-package-editable-mode" title="Link to this heading"></a></h2>
-<p>To use the code as an importable package:</p>
+<section id="step-3-install-the-package">
+<h2>Step 3: Install the Package<a class="headerlink" href="#step-3-install-the-package" title="Link to this heading"></a></h2>
+<p>Install oceanvis-py in editable mode so you have access to the latest features:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
-<p>This sets up the local repository in <em>editable</em> mode, so changes you make to <code class="docutils literal notranslate"><span class="pre">.py</span></code> files will immediately be reflected when imported.</p>
+<p>This installs oceanvis-py in <em>editable</em> mode, so any updates to the source code are immediately available when you import the package.</p>
 </section>
 <hr class="docutils" />
-<section id="step-4-test-that-it-works">
-<h2>Step 4: Test That It Works<a class="headerlink" href="#step-4-test-that-it-works" title="Link to this heading"></a></h2>
-<p>Try running the tests:</p>
+<section id="step-4-verify-installation">
+<h2>Step 4: Verify Installation<a class="headerlink" href="#step-4-verify-installation" title="Link to this heading"></a></h2>
+<section id="quick-test">
+<h3>Quick Test<a class="headerlink" href="#quick-test" title="Link to this heading"></a></h3>
+<p>Try importing the package:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">oceanvis_py</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">oceanvis_py</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="run-the-test-suite-development">
+<h3>Run the Test Suite (Development)<a class="headerlink" href="#run-the-test-suite-development" title="Link to this heading"></a></h3>
+<p>For development installations, run the full test suite:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest
 </pre></div>
 </div>
-<p>If all goes well, this runs the unit tests in the <code class="docutils literal notranslate"><span class="pre">tests/</span></code> folder.</p>
+<p>This validates that all oceanographic data handling and plotting functions work correctly.</p>
+</section>
+<section id="try-an-example">
+<h3>Try an Example<a class="headerlink" href="#try-an-example" title="Link to this heading"></a></h3>
+<p>Load and plot some example data (once example data is available):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">oceanvis_py.plots</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_section</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oceanvis_py.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">data_loader</span>
+
+<span class="c1"># Example with test data (when implemented)</span>
+<span class="c1"># data = data_loader.load_example_data(&#39;ctd_section&#39;)</span>
+<span class="c1"># fig, ax = plot_section(data, variable=&#39;temperature&#39;)</span>
+</pre></div>
+</div>
+</section>
 </section>
 <hr class="docutils" />
-<section id="optional-use-github-desktop-instead-of-terminal">
-<h2>Optional: Use GitHub Desktop Instead of Terminal<a class="headerlink" href="#optional-use-github-desktop-instead-of-terminal" title="Link to this heading"></a></h2>
-<p>If you prefer not to use the terminal:</p>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<section id="common-installation-issues">
+<h3>Common Installation Issues<a class="headerlink" href="#common-installation-issues" title="Link to this heading"></a></h3>
+<p><strong>Cartopy installation fails:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use conda instead of pip for geospatial dependencies</span>
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>cartopy
+</pre></div>
+</div>
+<p><strong>PyGMT backend issues:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optional - install GMT and PyGMT for additional backend</span>
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>gmt<span class="w"> </span>pygmt
+</pre></div>
+</div>
+<p><strong>Missing test data:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download example datasets (development only)</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from oceanvis_py.core.data_loader import download_test_data; download_test_data()&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="vscode-setup">
+<h3>VSCode Setup<a class="headerlink" href="#vscode-setup" title="Link to this heading"></a></h3>
+<p>For the best development experience:</p>
+<ol class="arabic simple">
+<li><p>Install the Python extension</p></li>
+<li><p>Select your oceanvis environment as the interpreter</p></li>
+<li><p>Enable pytest for test discovery</p></li>
+<li><p>Install Jupyter extension for notebook examples</p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<section id="for-users">
+<h3>For Users<a class="headerlink" href="#for-users" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p>Clone the repo using GitHub Desktop.</p></li>
-<li><p>Set up your Python environment using a tool like Anaconda or venv.</p></li>
-<li><p>Open the project folder in VSCode.</p></li>
-<li><p>Install the Python extension and interpreter.</p></li>
-<li><p>Run test scripts in the terminal panel or from notebooks.</p></li>
+<li><p>Explore the <a class="reference internal" href="#../notebooks/"><span class="xref myst">example notebooks</span></a> for common oceanographic plotting workflows</p></li>
+<li><p>Check out the <a class="reference internal" href="oceanvis_py.html"><span class="std std-doc">API documentation</span></a> for detailed function references</p></li>
+<li><p>Read the <a class="reference internal" href="#tutorials/plotting_guide.md"><span class="xref myst">plotting guide</span></a> for best practices</p></li>
 </ul>
-<p>See also <a class="reference internal" href="faq.html"><span class="std std-doc">faq.md</span></a> for troubleshooting installation problems.</p>
 </section>
-<hr class="docutils" />
-<section id="git-workflows">
-<h2>Git Workflows<a class="headerlink" href="#git-workflows" title="Link to this heading"></a></h2>
-<p>Depending on how you’re working:</p>
+<section id="for-contributors">
+<h3>For Contributors<a class="headerlink" href="#for-contributors" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p>If you are <strong>working on your own project</strong> using this template, see: <a class="reference internal" href="gitworkflow_solo.html"><span class="std std-doc">Solo Git</span></a></p></li>
-<li><p>If you are <strong>contributing to someone else’s project</strong>, see: <a class="reference internal" href="#gitcollab_v2.md"><span class="xref myst">Git Collaboration</span></a></p></li>
+<li><p>Review the <a class="reference internal" href="#../CONTRIBUTING.md"><span class="xref myst">contributing guidelines</span></a></p></li>
+<li><p>Read the <a class="reference internal" href="#development.md"><span class="xref myst">development workflow</span></a> documentation</p></li>
+<li><p>Check the <a class="reference internal" href="#style_guide.md"><span class="xref myst">style guide</span></a> for coding standards</p></li>
 </ul>
-<p>Both guides include step-by-step workflows with examples using Terminal, VSCode, and GitHub Desktop.</p>
+</section>
 </section>
 <hr class="docutils" />
-<section id="you-re-all-set">
-<h2>You’re All Set!<a class="headerlink" href="#you-re-all-set" title="Link to this heading"></a></h2>
-<p>From here, you can start editing code, writing documentation, or adding tests.</p>
+<section id="you-re-ready-to-visualize">
+<h2>You’re Ready to Visualize!<a class="headerlink" href="#you-re-ready-to-visualize" title="Link to this heading"></a></h2>
+<p>Oceanvis-py is now installed and ready for creating publication-quality oceanographic plots. Start with the example notebooks to see the package in action, or dive into the API documentation for detailed function references.</p>
 </section>
 </section>
 
@@ -240,8 +279,8 @@ pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </s
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Template Project: Documentation Hub" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="customisation_checklist.html" class="btn btn-neutral float-right" title="Customisation Checklist for New Projects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="OceanVis-Py: Oceanographic Visualization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="oceanvis_py.html" class="btn btn-neutral float-right" title="oceanvis_py API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

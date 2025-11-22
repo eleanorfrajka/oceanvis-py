@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>oceanvis_py.core.data_loader &mdash; template_project v0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=20758594" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=8b92e751"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            template_project
+              <img src="../../../_static/logo_template.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setup.html">Getting Started: Setup and Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../oceanvis_py.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">oceanvis_py</span> <span class="pre">API</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Help and reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/eleanorfrajka/oceanvis-py">GitHub Repo</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">template_project</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">oceanvis_py.core.data_loader</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for oceanvis_py.core.data_loader</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Data loading and validation utilities for oceanographic netCDF files.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+
+<div class="viewcode-block" id="load_variable_mappings">
+<a class="viewcode-back" href="../../../oceanvis_py.html#oceanvis_py.core.data_loader.load_variable_mappings">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_variable_mappings</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load variable name mappings from YAML configuration.&quot;&quot;&quot;</span>
+    <span class="n">config_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;config&quot;</span> <span class="o">/</span> <span class="s2">&quot;variable_mappings.yaml&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="c1"># Default mappings if config file doesn&#39;t exist</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;alternative&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;CT&quot;</span><span class="p">,</span> <span class="s2">&quot;conservative_temperature&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;celsius&quot;</span><span class="p">,</span> <span class="s2">&quot;degC&quot;</span><span class="p">,</span> <span class="s2">&quot;degree_C&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;salinity&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;salinity&quot;</span><span class="p">,</span> <span class="s2">&quot;sal&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;alternative&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;SA&quot;</span><span class="p">,</span> <span class="s2">&quot;absolute_salinity&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;psu&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;g/kg&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;pressure&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;pressure&quot;</span><span class="p">,</span> <span class="s2">&quot;pres&quot;</span><span class="p">,</span> <span class="s2">&quot;P&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;alternative&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;PRES&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;dbar&quot;</span><span class="p">,</span> <span class="s2">&quot;db&quot;</span><span class="p">,</span> <span class="s2">&quot;Pa&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;depth&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="s2">&quot;DEPTH&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;alternative&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;meters&quot;</span><span class="p">],</span>
+            <span class="p">},</span>
+        <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="find_variable">
+<a class="viewcode-back" href="../../../oceanvis_py.html#oceanvis_py.core.data_loader.find_variable">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_variable</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">variable_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">mappings</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find a variable in the dataset based on type and naming conventions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dataset : xarray.Dataset</span>
+<span class="sd">        The netCDF dataset to search</span>
+<span class="sd">    variable_type : str</span>
+<span class="sd">        Type of variable to find (e.g., &#39;temperature&#39;, &#39;salinity&#39;)</span>
+<span class="sd">    mappings : dict, optional</span>
+<span class="sd">        Variable mapping configuration</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str or None</span>
+<span class="sd">        Name of found variable, or None if not found</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">mappings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mappings</span> <span class="o">=</span> <span class="n">load_variable_mappings</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">variable_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mappings</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">var_config</span> <span class="o">=</span> <span class="n">mappings</span><span class="p">[</span><span class="n">variable_type</span><span class="p">]</span>
+    <span class="n">search_names</span> <span class="o">=</span> <span class="n">var_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;primary&quot;</span><span class="p">,</span> <span class="p">[])</span> <span class="o">+</span> <span class="n">var_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;alternative&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="k">for</span> <span class="n">var_name</span> <span class="ow">in</span> <span class="n">search_names</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">var_name</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">var_name</span>
+
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="load_netcdf">
+<a class="viewcode-back" href="../../../oceanvis_py.html#oceanvis_py.core.data_loader.load_netcdf">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_netcdf</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">validate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load netCDF file with oceanographic data using xarray.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    file_path : str or Path</span>
+<span class="sd">        Path to the netCDF file</span>
+<span class="sd">    validate : bool, default True</span>
+<span class="sd">        Whether to validate the dataset for oceanographic conventions</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    xarray.Dataset</span>
+<span class="sd">        Loaded dataset</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    FileNotFoundError</span>
+<span class="sd">        If the file doesn&#39;t exist</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If validation fails and critical variables are missing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">file_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;NetCDF file not found: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error loading netCDF file </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">validate</span><span class="p">:</span>
+        <span class="n">validation_result</span> <span class="o">=</span> <span class="n">validate_oceanographic_data</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;is_valid&quot;</span><span class="p">]:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset validation issues: </span><span class="si">{</span><span class="n">validation_result</span><span class="p">[</span><span class="s1">&#39;warnings&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dataset</span></div>
+
+
+
+<div class="viewcode-block" id="validate_oceanographic_data">
+<a class="viewcode-back" href="../../../oceanvis_py.html#oceanvis_py.core.data_loader.validate_oceanographic_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_oceanographic_data</span><span class="p">(</span><span class="n">dataset</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validate dataset for oceanographic data conventions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dataset : xarray.Dataset</span>
+<span class="sd">        Dataset to validate</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Validation results with &#39;is_valid&#39;, &#39;warnings&#39;, and &#39;found_variables&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">validation_result</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;is_valid&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;warnings&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;found_variables&quot;</span><span class="p">:</span> <span class="p">{},</span>
+        <span class="s2">&quot;required_dimensions&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;optional_variables&quot;</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="p">}</span>
+
+    <span class="n">mappings</span> <span class="o">=</span> <span class="n">load_variable_mappings</span><span class="p">()</span>
+
+    <span class="c1"># Check for coordinate variables</span>
+    <span class="n">coordinate_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">coord_var</span> <span class="ow">in</span> <span class="n">coordinate_vars</span><span class="p">:</span>
+        <span class="n">found_var</span> <span class="o">=</span> <span class="n">find_variable</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">coord_var</span><span class="p">,</span> <span class="n">mappings</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">found_var</span><span class="p">:</span>
+            <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;found_variables&quot;</span><span class="p">][</span><span class="n">coord_var</span><span class="p">]</span> <span class="o">=</span> <span class="n">found_var</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Try common alternatives</span>
+            <span class="n">alternatives</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;latitude&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;LATITUDE&quot;</span><span class="p">,</span> <span class="s2">&quot;LAT&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;longitude&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;lon&quot;</span><span class="p">,</span> <span class="s2">&quot;LONGITUDE&quot;</span><span class="p">,</span> <span class="s2">&quot;LON&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;TIME&quot;</span><span class="p">,</span> <span class="s2">&quot;time_counter&quot;</span><span class="p">],</span>
+            <span class="p">}</span>
+
+            <span class="k">for</span> <span class="n">alt_name</span> <span class="ow">in</span> <span class="n">alternatives</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">coord_var</span><span class="p">,</span> <span class="p">[]):</span>
+                <span class="k">if</span> <span class="n">alt_name</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="p">:</span>
+                    <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;found_variables&quot;</span><span class="p">][</span><span class="n">coord_var</span><span class="p">]</span> <span class="o">=</span> <span class="n">alt_name</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;warnings&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Missing coordinate variable: </span><span class="si">{</span><span class="n">coord_var</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+    <span class="c1"># Check for pressure or depth</span>
+    <span class="n">depth_found</span> <span class="o">=</span> <span class="n">find_variable</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="n">mappings</span><span class="p">)</span>
+    <span class="n">pressure_found</span> <span class="o">=</span> <span class="n">find_variable</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="s2">&quot;pressure&quot;</span><span class="p">,</span> <span class="n">mappings</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">depth_found</span><span class="p">:</span>
+        <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;found_variables&quot;</span><span class="p">][</span><span class="s2">&quot;depth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">depth_found</span>
+    <span class="k">elif</span> <span class="n">pressure_found</span><span class="p">:</span>
+        <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;found_variables&quot;</span><span class="p">][</span><span class="s2">&quot;pressure&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pressure_found</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;warnings&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="s2">&quot;Missing vertical coordinate (depth or pressure)&quot;</span>
+        <span class="p">)</span>
+        <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;is_valid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># Check for common oceanographic variables</span>
+    <span class="n">ocean_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;salinity&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">var_type</span> <span class="ow">in</span> <span class="n">ocean_vars</span><span class="p">:</span>
+        <span class="n">found_var</span> <span class="o">=</span> <span class="n">find_variable</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">var_type</span><span class="p">,</span> <span class="n">mappings</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">found_var</span><span class="p">:</span>
+            <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;found_variables&quot;</span><span class="p">][</span><span class="n">var_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">found_var</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;warnings&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing </span><span class="si">{</span><span class="n">var_type</span><span class="si">}</span><span class="s2"> variable&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check for velocity components (optional)</span>
+    <span class="n">velocity_vars</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;u_velocity&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;v_velocity&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eastward_velocity&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;northward_velocity&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">velocity_found</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">var_name</span> <span class="ow">in</span> <span class="n">velocity_vars</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">var_name</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="p">:</span>
+            <span class="n">velocity_found</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var_name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">velocity_found</span><span class="p">:</span>
+        <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;optional_variables&quot;</span><span class="p">][</span><span class="s2">&quot;velocity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocity_found</span>
+
+    <span class="c1"># Check dimensions</span>
+    <span class="n">common_dims</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;N_PROF&quot;</span><span class="p">,</span> <span class="s2">&quot;N_LEVELS&quot;</span><span class="p">,</span> <span class="s2">&quot;N_MEASUREMENTS&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">dim_name</span> <span class="ow">in</span> <span class="n">common_dims</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dim_name</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dims</span><span class="p">:</span>
+            <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;required_dimensions&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dim_name</span><span class="p">)</span>
+
+    <span class="c1"># Check for distance coordinate (for towyo data)</span>
+    <span class="k">if</span> <span class="s2">&quot;distance&quot;</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="p">:</span>
+        <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;optional_variables&quot;</span><span class="p">][</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;distance&quot;</span>
+
+    <span class="c1"># Check for water depth (bathymetry)</span>
+    <span class="n">water_depth_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;water_depth&quot;</span><span class="p">,</span> <span class="s2">&quot;WATER_DEPTH&quot;</span><span class="p">,</span> <span class="s2">&quot;bathy&quot;</span><span class="p">,</span> <span class="s2">&quot;bathymetry&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">depth_var</span> <span class="ow">in</span> <span class="n">water_depth_vars</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">depth_var</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="p">:</span>
+            <span class="n">validation_result</span><span class="p">[</span><span class="s2">&quot;optional_variables&quot;</span><span class="p">][</span><span class="s2">&quot;water_depth&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">depth_var</span>
+            <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">validation_result</span></div>
+
+
+
+<div class="viewcode-block" id="get_data_info">
+<a class="viewcode-back" href="../../../oceanvis_py.html#oceanvis_py.core.data_loader.get_data_info">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_data_info</span><span class="p">(</span><span class="n">dataset</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract useful information about the oceanographic dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dataset : xarray.Dataset</span>
+<span class="sd">        Dataset to analyze</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Information about the dataset structure and content</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;dimensions&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">sizes</span><span class="p">),</span>
+        <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+        <span class="s2">&quot;data_variables&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">data_vars</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+        <span class="s2">&quot;global_attributes&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">attrs</span><span class="p">),</span>
+        <span class="s2">&quot;variable_info&quot;</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Get information about each variable</span>
+    <span class="k">for</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">var_data</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data_vars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">info</span><span class="p">[</span><span class="s2">&quot;variable_info&quot;</span><span class="p">][</span><span class="n">var_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;dimensions&quot;</span><span class="p">:</span> <span class="n">var_data</span><span class="o">.</span><span class="n">dims</span><span class="p">,</span>
+            <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="n">var_data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+            <span class="s2">&quot;dtype&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">var_data</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+            <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">var_data</span><span class="o">.</span><span class="n">attrs</span><span class="p">),</span>
+            <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">var_data</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;units&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;long_name&quot;</span><span class="p">:</span> <span class="n">var_data</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;long_name&quot;</span><span class="p">,</span> <span class="n">var_name</span><span class="p">),</span>
+        <span class="p">}</span>
+
+    <span class="c1"># Detect data type (profile vs timeseries vs section)</span>
+    <span class="n">feature_type</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;featureType&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">feature_type</span> <span class="o">==</span> <span class="s2">&quot;unknown&quot;</span><span class="p">:</span>
+        <span class="c1"># Try to infer from dimensions</span>
+        <span class="k">if</span> <span class="s2">&quot;N_PROF&quot;</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dims</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="s2">&quot;N_PROF&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;distance&quot;</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">variables</span><span class="p">:</span>
+                    <span class="n">feature_type</span> <span class="o">=</span> <span class="s2">&quot;towyo_section&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">feature_type</span> <span class="o">=</span> <span class="s2">&quot;profile_collection&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">feature_type</span> <span class="o">=</span> <span class="s2">&quot;single_profile&quot;</span>
+        <span class="k">elif</span> <span class="s2">&quot;time&quot;</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dims</span> <span class="ow">and</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">feature_type</span> <span class="o">=</span> <span class="s2">&quot;timeseries&quot;</span>
+
+    <span class="n">info</span><span class="p">[</span><span class="s2">&quot;inferred_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_type</span>
+
+    <span class="k">return</span> <span class="n">info</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Eleanor Frajka-Williams, FirstName LastName.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

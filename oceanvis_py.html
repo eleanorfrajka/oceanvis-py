@@ -1,0 +1,762 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>oceanvis_py API &mdash; template_project v0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=20758594" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8b92e751"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Getting Started: Setup and Installation" href="setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            template_project
+              <img src="_static/logo_template.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Getting Started: Setup and Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">oceanvis_py</span> <span class="pre">API</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-oceanvis_py.core.data_loader">Core Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.data_loader.find_variable"><code class="docutils literal notranslate"><span class="pre">find_variable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.data_loader.get_data_info"><code class="docutils literal notranslate"><span class="pre">get_data_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.data_loader.load_netcdf"><code class="docutils literal notranslate"><span class="pre">load_netcdf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.data_loader.load_variable_mappings"><code class="docutils literal notranslate"><span class="pre">load_variable_mappings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.data_loader.validate_oceanographic_data"><code class="docutils literal notranslate"><span class="pre">validate_oceanographic_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.coordinates.add_distance_coordinate"><code class="docutils literal notranslate"><span class="pre">add_distance_coordinate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.coordinates.calculate_distance"><code class="docutils literal notranslate"><span class="pre">calculate_distance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.coordinates.cumulative_distance_from_coordinates"><code class="docutils literal notranslate"><span class="pre">cumulative_distance_from_coordinates()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.coordinates.distance_from_coordinates"><code class="docutils literal notranslate"><span class="pre">distance_from_coordinates()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.colormaps.get_oceanographic_colormap"><code class="docutils literal notranslate"><span class="pre">get_oceanographic_colormap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.colormaps.save_colormap_preferences"><code class="docutils literal notranslate"><span class="pre">save_colormap_preferences()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting-functions">Plotting Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.sections.plot_dual_section"><code class="docutils literal notranslate"><span class="pre">plot_dual_section()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.sections.plot_section"><code class="docutils literal notranslate"><span class="pre">plot_section()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.maps.plot_map"><code class="docutils literal notranslate"><span class="pre">plot_map()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.widgets.ColorMapWidget"><code class="docutils literal notranslate"><span class="pre">ColorMapWidget</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.widgets.InteractiveColormapWidget"><code class="docutils literal notranslate"><span class="pre">InteractiveColormapWidget</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#oceanvis_py.plots.widgets.InteractiveColormapWidget.display"><code class="docutils literal notranslate"><span class="pre">InteractiveColormapWidget.display()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#oceanvis_py.plots.widgets.InteractiveColormapWidget.update_plot"><code class="docutils literal notranslate"><span class="pre">InteractiveColormapWidget.update_plot()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.widgets.calculate_histogram_levels"><code class="docutils literal notranslate"><span class="pre">calculate_histogram_levels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.widgets.create_colormap_widget"><code class="docutils literal notranslate"><span class="pre">create_colormap_widget()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.widgets.determine_optimal_precision"><code class="docutils literal notranslate"><span class="pre">determine_optimal_precision()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.widgets.generate_cpt_file"><code class="docutils literal notranslate"><span class="pre">generate_cpt_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.widgets.hex_to_rgb"><code class="docutils literal notranslate"><span class="pre">hex_to_rgb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.widgets.read_cpt_file"><code class="docutils literal notranslate"><span class="pre">read_cpt_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.widgets.rgb_to_hex"><code class="docutils literal notranslate"><span class="pre">rgb_to_hex()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.widgets.round_to_human_readable"><code class="docutils literal notranslate"><span class="pre">round_to_human_readable()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#plotting-backends">Plotting Backends</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.backends.matplotlib_backend.MatplotlibBackend"><code class="docutils literal notranslate"><span class="pre">MatplotlibBackend</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#oceanvis_py.backends.matplotlib_backend.MatplotlibBackend.create_section_plot"><code class="docutils literal notranslate"><span class="pre">MatplotlibBackend.create_section_plot()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.backends.pygmt_backend.create_bathymetry_polygon"><code class="docutils literal notranslate"><span class="pre">create_bathymetry_polygon()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.backends.pygmt_backend.make_pygmt_grid"><code class="docutils literal notranslate"><span class="pre">make_pygmt_grid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.backends.pygmt_backend.plot_section"><code class="docutils literal notranslate"><span class="pre">plot_section()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Help and reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/eleanorfrajka/oceanvis-py">GitHub Repo</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">template_project</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">oceanvis_py</span> <span class="pre">API</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/oceanvis_py.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="oceanvis-py-api">
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">oceanvis_py</span> <span class="pre">API</span></code><a class="headerlink" href="#oceanvis-py-api" title="Link to this heading"></a></h1>
+<section id="module-oceanvis_py.core.data_loader">
+<span id="core-data-handling"></span><h2>Core Data Handling<a class="headerlink" href="#module-oceanvis_py.core.data_loader" title="Link to this heading"></a></h2>
+<p>Data loading and validation utilities for oceanographic netCDF files.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.data_loader.find_variable">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.data_loader.</span></span><span class="sig-name descname"><span class="pre">find_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mappings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/oceanvis_py/core/data_loader.html#find_variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.data_loader.find_variable" title="Link to this definition"></a></dt>
+<dd><p>Find a variable in the dataset based on type and naming conventions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>xarray.Dataset</em>) – The netCDF dataset to search</p></li>
+<li><p><strong>variable_type</strong> (<em>str</em>) – Type of variable to find (e.g., ‘temperature’, ‘salinity’)</p></li>
+<li><p><strong>mappings</strong> (<em>dict</em><em>, </em><em>optional</em>) – Variable mapping configuration</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Name of found variable, or None if not found</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.data_loader.get_data_info">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.data_loader.</span></span><span class="sig-name descname"><span class="pre">get_data_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="_modules/oceanvis_py/core/data_loader.html#get_data_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.data_loader.get_data_info" title="Link to this definition"></a></dt>
+<dd><p>Extract useful information about the oceanographic dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataset</strong> (<em>xarray.Dataset</em>) – Dataset to analyze</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Information about the dataset structure and content</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.data_loader.load_netcdf">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.data_loader.</span></span><span class="sig-name descname"><span class="pre">load_netcdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dataset</span></span></span><a class="reference internal" href="_modules/oceanvis_py/core/data_loader.html#load_netcdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.data_loader.load_netcdf" title="Link to this definition"></a></dt>
+<dd><p>Load netCDF file with oceanographic data using xarray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to the netCDF file</p></li>
+<li><p><strong>validate</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to validate the dataset for oceanographic conventions</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Loaded dataset</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>xarray.Dataset</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the file doesn’t exist</p></li>
+<li><p><strong>ValueError</strong> – If validation fails and critical variables are missing</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.data_loader.load_variable_mappings">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.data_loader.</span></span><span class="sig-name descname"><span class="pre">load_variable_mappings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="_modules/oceanvis_py/core/data_loader.html#load_variable_mappings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.data_loader.load_variable_mappings" title="Link to this definition"></a></dt>
+<dd><p>Load variable name mappings from YAML configuration.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.data_loader.validate_oceanographic_data">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.data_loader.</span></span><span class="sig-name descname"><span class="pre">validate_oceanographic_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="_modules/oceanvis_py/core/data_loader.html#validate_oceanographic_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.data_loader.validate_oceanographic_data" title="Link to this definition"></a></dt>
+<dd><p>Validate dataset for oceanographic data conventions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataset</strong> (<em>xarray.Dataset</em>) – Dataset to validate</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Validation results with ‘is_valid’, ‘warnings’, and ‘found_variables’</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-oceanvis_py.core.coordinates">Coordinate conversion utilities for oceanographic data.</p>
+<p>Handles conversion from latitude/longitude to distance coordinates
+for section plots, preserving the uneven spacing of profiles.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.coordinates.add_distance_coordinate">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.coordinates.</span></span><span class="sig-name descname"><span class="pre">add_distance_coordinate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'latitude'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'longitude'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'N_PROF'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cumulative</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dataset</span></span></span><a class="reference internal" href="_modules/oceanvis_py/core/coordinates.html#add_distance_coordinate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.coordinates.add_distance_coordinate" title="Link to this definition"></a></dt>
+<dd><p>Add distance coordinate to dataset based on lat/lon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>xarray.Dataset</em>) – Dataset with latitude/longitude coordinates</p></li>
+<li><p><strong>lat_var</strong> (<em>str</em><em>, </em><em>default 'latitude'</em>) – Name of latitude variable</p></li>
+<li><p><strong>lon_var</strong> (<em>str</em><em>, </em><em>default 'longitude'</em>) – Name of longitude variable</p></li>
+<li><p><strong>profile_dim</strong> (<em>str</em><em>, </em><em>default 'N_PROF'</em>) – Name of profile dimension</p></li>
+<li><p><strong>cumulative</strong> (<em>bool</em><em>, </em><em>default False</em>) – If True, calculate cumulative distance along track.
+If False, calculate distance from first point.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dataset with added ‘distance’ coordinate</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>xarray.Dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.coordinates.calculate_distance">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.coordinates.</span></span><span class="sig-name descname"><span class="pre">calculate_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/oceanvis_py/core/coordinates.html#calculate_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.coordinates.calculate_distance" title="Link to this definition"></a></dt>
+<dd><p>Calculate great circle distance between two points using GSW.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lat1</strong> (<em>float</em>) – Latitude and longitude of first point (degrees)</p></li>
+<li><p><strong>lon1</strong> (<em>float</em>) – Latitude and longitude of first point (degrees)</p></li>
+<li><p><strong>lat2</strong> (<em>float</em>) – Latitude and longitude of second point (degrees)</p></li>
+<li><p><strong>lon2</strong> (<em>float</em>) – Latitude and longitude of second point (degrees)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Distance in kilometers</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.coordinates.cumulative_distance_from_coordinates">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.coordinates.</span></span><span class="sig-name descname"><span class="pre">cumulative_distance_from_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/oceanvis_py/core/coordinates.html#cumulative_distance_from_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.coordinates.cumulative_distance_from_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Calculate cumulative distance along a track from lat/lon coordinates.</p>
+<p>Useful for towyo data where you want distance along the ship track.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latitudes</strong> (<em>array-like</em>) – Array of latitude values (degrees)</p></li>
+<li><p><strong>longitudes</strong> (<em>array-like</em>) – Array of longitude values (degrees)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of cumulative distances in kilometers</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.coordinates.distance_from_coordinates">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.coordinates.</span></span><span class="sig-name descname"><span class="pre">distance_from_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/oceanvis_py/core/coordinates.html#distance_from_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.coordinates.distance_from_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Convert latitude/longitude coordinates to distances from a reference point.</p>
+<p>Creates an uneven distance grid based on actual profile locations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latitudes</strong> (<em>array-like</em>) – Array of latitude values (degrees)</p></li>
+<li><p><strong>longitudes</strong> (<em>array-like</em>) – Array of longitude values (degrees)</p></li>
+<li><p><strong>reference_point</strong> (<em>tuple</em><em> of </em><em>float</em><em>, </em><em>optional</em>) – (lat, lon) of reference point. If None, uses first point.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of distances in kilometers (uneven spacing preserved)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-oceanvis_py.core.colormaps">Colormap utilities for oceanographic data visualization.</p>
+<p>Uses cmocean colormaps and custom colormaps for oceanographic variables.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.colormaps.get_oceanographic_colormap">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.colormaps.</span></span><span class="sig-name descname"><span class="pre">get_oceanographic_colormap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'temperature'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/oceanvis_py/core/colormaps.html#get_oceanographic_colormap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.colormaps.get_oceanographic_colormap" title="Link to this definition"></a></dt>
+<dd><p>Get appropriate colormap for oceanographic variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>variable</strong> (<em>str</em><em>, </em><em>default 'temperature'</em>) – Variable name to get colormap for</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Colormap object if cmocean available, colormap name otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>matplotlib colormap or str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.colormaps.save_colormap_preferences">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.colormaps.</span></span><span class="sig-name descname"><span class="pre">save_colormap_preferences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preferences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/oceanvis_py/core/colormaps.html#save_colormap_preferences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.colormaps.save_colormap_preferences" title="Link to this definition"></a></dt>
+<dd><p>Save user colormap preferences to config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>preferences</strong> (<em>dict</em>) – Dictionary of variable: colormap preferences</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Placeholder implementation - will save to YAML config in future.</p>
+</dd></dl>
+
+</section>
+<section id="plotting-functions">
+<h2>Plotting Functions<a class="headerlink" href="#plotting-functions" title="Link to this heading"></a></h2>
+<p id="module-oceanvis_py.plots.sections">Section plotting functionality for oceanographic data.</p>
+<p>Implements section plots with sigma2 contouring and dual subplot functionality.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.sections.plot_dual_section">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.sections.</span></span><span class="sig-name descname"><span class="pre">plot_dual_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'temperature'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'salinity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_coord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_coord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pressure'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma2_contours</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma2_levels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(14,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Figure</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Axes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Axes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/sections.html#plot_dual_section"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.sections.plot_dual_section" title="Link to this definition"></a></dt>
+<dd><p>Create dual section plot (temperature left, salinity right).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>xarray.Dataset</em>) – Dataset containing oceanographic data</p></li>
+<li><p><strong>left_var</strong> (<em>str</em><em>, </em><em>default 'temperature'</em>) – Variable for left subplot</p></li>
+<li><p><strong>right_var</strong> (<em>str</em><em>, </em><em>default 'salinity'</em>) – Variable for right subplot</p></li>
+<li><p><strong>x_coord</strong> (<em>str</em><em>, </em><em>default 'distance'</em>) – X-coordinate variable name</p></li>
+<li><p><strong>y_coord</strong> (<em>str</em><em>, </em><em>default 'pressure'</em>) – Y-coordinate variable name</p></li>
+<li><p><strong>sigma2_contours</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to overlay sigma2 density contours</p></li>
+<li><p><strong>sigma2_levels</strong> (<em>list</em><em> of </em><em>float</em><em>, </em><em>optional</em>) – Contour levels for sigma2</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>default</em><em> (</em><em>14</em><em>, </em><em>6</em><em>)</em>) – Figure size (width, height) in inches</p></li>
+<li><p><strong>ylims</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Y-axis limits (min, max). If None, uses sensible defaults for pressure</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments passed to pcolormesh</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(figure, (left_axes, right_axes)) objects</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.sections.plot_section">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.sections.</span></span><span class="sig-name descname"><span class="pre">plot_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'temperature'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_coord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_coord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pressure'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colormap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ListedColormap</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma2_contours</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma2_levels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(10,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_levels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'percentile'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BoundaryNorm</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpt_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Figure</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Axes</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/sections.html#plot_section"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.sections.plot_section" title="Link to this definition"></a></dt>
+<dd><p>Create section plot of oceanographic variable vs distance and depth/pressure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>xarray.Dataset</em>) – Dataset containing oceanographic data</p></li>
+<li><p><strong>variable</strong> (<em>str</em><em>, </em><em>default 'temperature'</em>) – Variable to plot</p></li>
+<li><p><strong>x_coord</strong> (<em>str</em><em>, </em><em>default 'distance'</em>) – X-coordinate variable name (usually distance or time)</p></li>
+<li><p><strong>y_coord</strong> (<em>str</em><em>, </em><em>default 'pressure'</em>) – Y-coordinate variable name (pressure or depth)</p></li>
+<li><p><strong>colormap</strong> (<em>str</em><em> or </em><em>ListedColormap</em><em>, </em><em>optional</em>) – Colormap. If None, uses default for variable</p></li>
+<li><p><strong>sigma2_contours</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to overlay sigma2 density contours</p></li>
+<li><p><strong>sigma2_levels</strong> (<em>list</em><em> of </em><em>float</em><em>, </em><em>optional</em>) – Contour levels for sigma2. If None, uses automatic levels</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>default</em><em> (</em><em>10</em><em>, </em><em>6</em><em>)</em>) – Figure size (width, height) in inches</p></li>
+<li><p><strong>ylims</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Y-axis limits (min, max). If None, uses sensible defaults for pressure</p></li>
+<li><p><strong>discrete_levels</strong> (<em>int</em><em>, </em><em>default 15</em>) – Number of discrete color levels to use</p></li>
+<li><p><strong>discrete_method</strong> (<em>str</em><em>, </em><em>default 'percentile'</em>) – Method for calculating discrete levels (‘percentile’, ‘linear’, ‘histogram’)</p></li>
+<li><p><strong>norm</strong> (<em>BoundaryNorm</em><em>, </em><em>optional</em>) – Custom normalization. If None, creates discrete normalization</p></li>
+<li><p><strong>cpt_file</strong> (<em>str</em><em> or </em><em>Path</em><em>, </em><em>optional</em>) – Path to PyGMT .cpt file. If provided, overrides colormap and norm parameters</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments passed to pcolormesh</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(figure, axes) objects</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-oceanvis_py.plots.maps">Map plotting functionality for oceanographic data.</p>
+<p>Placeholder implementation - will be expanded in future development.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.maps.plot_map">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.maps.</span></span><span class="sig-name descname"><span class="pre">plot_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bathymetry_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Figure</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Axes</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/maps.html#plot_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.maps.plot_map" title="Link to this definition"></a></dt>
+<dd><p>Create bathymetry map with optional profile locations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bathymetry_file</strong> (<em>str</em>) – Path to bathymetry netCDF file</p></li>
+<li><p><strong>**kwargs</strong> – Additional plotting arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(figure, axes) objects</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Placeholder implementation - will be fully implemented later.</p>
+</dd></dl>
+
+<p id="module-oceanvis_py.plots.widgets">Interactive widgets for colormap exploration and nonlinear colorbar tuning.</p>
+<p>Uses ipywidgets to create interactive interfaces for exploring different
+colormaps and colorbar normalization strategies for oceanographic data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="oceanvis_py.plots.widgets.ColorMapWidget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.widgets.</span></span><span class="sig-name descname"><span class="pre">ColorMapWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_colormap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'viridis'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/oceanvis_py/plots/widgets.html#ColorMapWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.widgets.ColorMapWidget" title="Link to this definition"></a></dt>
+<dd><p>Alias for InteractiveColormapWidget for backwards compatibility.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="oceanvis_py.plots.widgets.InteractiveColormapWidget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.widgets.</span></span><span class="sig-name descname"><span class="pre">InteractiveColormapWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_colormap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'viridis'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/oceanvis_py/plots/widgets.html#InteractiveColormapWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.widgets.InteractiveColormapWidget" title="Link to this definition"></a></dt>
+<dd><p>Interactive widget for exploring colormaps and colorbar normalizations.</p>
+<p>Allows real-time experimentation with different colormaps, discrete levels,
+and nonlinear normalizations based on data distribution.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="oceanvis_py.plots.widgets.InteractiveColormapWidget.display">
+<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/oceanvis_py/plots/widgets.html#InteractiveColormapWidget.display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.widgets.InteractiveColormapWidget.display" title="Link to this definition"></a></dt>
+<dd><p>Display the complete interactive widget.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="oceanvis_py.plots.widgets.InteractiveColormapWidget.update_plot">
+<span class="sig-name descname"><span class="pre">update_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/oceanvis_py/plots/widgets.html#InteractiveColormapWidget.update_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.widgets.InteractiveColormapWidget.update_plot" title="Link to this definition"></a></dt>
+<dd><p>Update the colorbar visualization.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.widgets.calculate_histogram_levels">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.widgets.</span></span><span class="sig-name descname"><span class="pre">calculate_histogram_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_levels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'percentile'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tail_compression</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.8</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/widgets.html#calculate_histogram_levels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.widgets.calculate_histogram_levels" title="Link to this definition"></a></dt>
+<dd><p>Calculate nonlinear colorbar levels based on data distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>np.ndarray</em>) – Data array (with NaNs removed)</p></li>
+<li><p><strong>n_levels</strong> (<em>int</em><em>, </em><em>default 20</em>) – Number of discrete levels</p></li>
+<li><p><strong>method</strong> (<em>str</em><em>, </em><em>default 'percentile'</em>) – Method for level calculation:
+- ‘percentile’: Use percentiles for more detail in concentrated areas
+- ‘linear’: Linear spacing
+- ‘histogram’: Use histogram bin edges
+- ‘symmetric_zero’: Symmetric levels around zero (for anomalies/velocity)</p></li>
+<li><p><strong>tail_compression</strong> (<em>float</em><em>, </em><em>default 0.8</em>) – Factor for compressing tails (0.5-1.0, higher = more compression)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of level boundaries (length n_levels + 1)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.widgets.create_colormap_widget">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.widgets.</span></span><span class="sig-name descname"><span class="pre">create_colormap_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'variable'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#oceanvis_py.plots.widgets.InteractiveColormapWidget" title="oceanvis_py.plots.widgets.InteractiveColormapWidget"><span class="pre">InteractiveColormapWidget</span></a></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/widgets.html#create_colormap_widget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.widgets.create_colormap_widget" title="Link to this definition"></a></dt>
+<dd><p>Create an interactive colormap widget for exploring colorbars.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>xarray.DataArray</em><em> or </em><em>numpy.ndarray</em>) – Data to visualize</p></li>
+<li><p><strong>variable_name</strong> (<em>str</em><em>, </em><em>default &quot;variable&quot;</em>) – Name of the variable for labels</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Widget instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#oceanvis_py.plots.widgets.InteractiveColormapWidget" title="oceanvis_py.plots.widgets.InteractiveColormapWidget">InteractiveColormapWidget</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">oceanvis_py.plots.widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_colormap_widget</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Load data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;data.nc&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create widget</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span> <span class="o">=</span> <span class="n">create_colormap_widget</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">salinity</span><span class="p">,</span> <span class="s1">&#39;Salinity&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.widgets.determine_optimal_precision">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.widgets.</span></span><span class="sig-name descname"><span class="pre">determine_optimal_precision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_levels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/widgets.html#determine_optimal_precision"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.widgets.determine_optimal_precision" title="Link to this definition"></a></dt>
+<dd><p>Determine optimal precision for level boundaries based on data range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_range</strong> (<em>float</em>) – Range of the data (max - min)</p></li>
+<li><p><strong>n_levels</strong> (<em>int</em>) – Number of levels desired</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optimal decimal precision</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.widgets.generate_cpt_file">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.widgets.</span></span><span class="sig-name descname"><span class="pre">generate_cpt_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">levels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colormap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">foreground_color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nan_color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'#ffffff'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/widgets.html#generate_cpt_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.widgets.generate_cpt_file" title="Link to this definition"></a></dt>
+<dd><p>Generate a PyGMT-compatible .cpt (color palette table) file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>levels</strong> (<em>np.ndarray</em>) – Level boundaries (length n_levels + 1)</p></li>
+<li><p><strong>colormap</strong> (<em>matplotlib colormap</em>) – Colormap to sample colors from</p></li>
+<li><p><strong>output_file</strong> (<em>str</em><em> or </em><em>Path</em>) – Output file path for the .cpt file</p></li>
+<li><p><strong>background_color</strong> (<em>str</em><em>, </em><em>optional</em>) – Hex color for background (B). If None, uses first color</p></li>
+<li><p><strong>foreground_color</strong> (<em>str</em><em>, </em><em>optional</em>) – Hex color for foreground (F). If None, uses last color</p></li>
+<li><p><strong>nan_color</strong> (<em>str</em><em>, </em><em>default &quot;#ffffff&quot;</em>) – Hex color for NaN values (N)</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">oceanvis_py.plots.widgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_histogram_levels</span><span class="p">,</span> <span class="n">generate_cpt_file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">oceanvis_py.core.custom_colormaps</span><span class="w"> </span><span class="kn">import</span> <span class="n">CUSTOM_COLORMAPS</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Calculate levels for your data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">levels</span> <span class="o">=</span> <span class="n">calculate_histogram_levels</span><span class="p">(</span><span class="n">salinity_data</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="s1">&#39;percentile&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Generate CPT file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generate_cpt_file</span><span class="p">(</span><span class="n">levels</span><span class="p">,</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s1">&#39;SAL&#39;</span><span class="p">],</span> <span class="s1">&#39;salinity.cpt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.widgets.hex_to_rgb">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.widgets.</span></span><span class="sig-name descname"><span class="pre">hex_to_rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hex_color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/oceanvis_py/plots/widgets.html#hex_to_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.widgets.hex_to_rgb" title="Link to this definition"></a></dt>
+<dd><p>Convert hex color string to RGB values (0-1 range).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.widgets.read_cpt_file">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.widgets.</span></span><span class="sig-name descname"><span class="pre">read_cpt_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpt_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/widgets.html#read_cpt_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.widgets.read_cpt_file" title="Link to this definition"></a></dt>
+<dd><p>Read a PyGMT .cpt file and return colormap and normalization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cpt_file</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to the .cpt file</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(colormap, norm, levels) where:
+- colormap is a matplotlib ListedColormap
+- norm is a matplotlib BoundaryNorm
+- levels is the array of level boundaries</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cmap</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="n">read_cpt_file</span><span class="p">(</span><span class="s1">&#39;salinity.cpt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.widgets.rgb_to_hex">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.widgets.</span></span><span class="sig-name descname"><span class="pre">rgb_to_hex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/oceanvis_py/plots/widgets.html#rgb_to_hex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.widgets.rgb_to_hex" title="Link to this definition"></a></dt>
+<dd><p>Convert RGB values (0-1 range) to hex color string.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.widgets.round_to_human_readable">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.widgets.</span></span><span class="sig-name descname"><span class="pre">round_to_human_readable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/widgets.html#round_to_human_readable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.widgets.round_to_human_readable" title="Link to this definition"></a></dt>
+<dd><p>Round a value to be human-readable with specified precision.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>float</em>) – Value to round</p></li>
+<li><p><strong>precision</strong> (<em>int</em><em>, </em><em>default 2</em>) – Maximum decimal places</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rounded value</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="plotting-backends">
+<h2>Plotting Backends<a class="headerlink" href="#plotting-backends" title="Link to this heading"></a></h2>
+<p id="module-oceanvis_py.backends.matplotlib_backend">Matplotlib backend for oceanographic plotting.</p>
+<p>Placeholder implementation - will be expanded in future development.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="oceanvis_py.backends.matplotlib_backend.MatplotlibBackend">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">oceanvis_py.backends.matplotlib_backend.</span></span><span class="sig-name descname"><span class="pre">MatplotlibBackend</span></span><a class="reference internal" href="_modules/oceanvis_py/backends/matplotlib_backend.html#MatplotlibBackend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.backends.matplotlib_backend.MatplotlibBackend" title="Link to this definition"></a></dt>
+<dd><p>Matplotlib plotting backend for oceanographic data.</p>
+<p class="rubric">Notes</p>
+<p>Placeholder implementation - will be fully implemented later.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="oceanvis_py.backends.matplotlib_backend.MatplotlibBackend.create_section_plot">
+<span class="sig-name descname"><span class="pre">create_section_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/oceanvis_py/backends/matplotlib_backend.html#MatplotlibBackend.create_section_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.backends.matplotlib_backend.MatplotlibBackend.create_section_plot" title="Link to this definition"></a></dt>
+<dd><p>Create section plot using matplotlib.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-oceanvis_py.backends.pygmt_backend">PyGMT backend for oceanvis plotting.</p>
+<p>Provides PyGMT-based section plotting with support for CPT files and
+integration with the interactive colormap widgets.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.backends.pygmt_backend.create_bathymetry_polygon">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.backends.pygmt_backend.</span></span><span class="sig-name descname"><span class="pre">create_bathymetry_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds_towyo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/oceanvis_py/backends/pygmt_backend.html#create_bathymetry_polygon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.backends.pygmt_backend.create_bathymetry_polygon" title="Link to this definition"></a></dt>
+<dd><p>Create bathymetry polygon for section plotting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ds_towyo</strong> (<em>xarray.Dataset</em>) – Dataset containing distance and waterdepth variables</p></li>
+<li><p><strong>max_depth</strong> (<em>float</em><em>, </em><em>default 3000</em>) – Maximum depth for polygon closure</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>bathymetry_df</strong> – DataFrame with distance and waterdepth columns for polygon plotting</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.backends.pygmt_backend.make_pygmt_grid">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.backends.pygmt_backend.</span></span><span class="sig-name descname"><span class="pre">make_pygmt_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_var_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_var_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_data_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/oceanvis_py/backends/pygmt_backend.html#make_pygmt_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.backends.pygmt_backend.make_pygmt_grid" title="Link to this definition"></a></dt>
+<dd><p>Create a PyGMT-compatible xarray.DataArray grid from an xarray.Dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ds</strong> (<em>xarray.Dataset</em>) – The dataset containing coordinate variables.</p></li>
+<li><p><strong>x_var_name</strong> (<em>str</em>) – Name of the x-coordinate variable (e.g., ‘distance’).</p></li>
+<li><p><strong>y_var_name</strong> (<em>str</em>) – Name of the y-coordinate variable (e.g., ‘pressure’).</p></li>
+<li><p><strong>z_data_matrix</strong> (<em>str</em><em> or </em><em>np.ndarray</em>) – Name of the data variable in ds, or a 2D numpy array of data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>grid</strong> – DataArray with dims (y, x) and coordinates (y, x) for use in PyGMT.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>xarray.DataArray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.backends.pygmt_backend.plot_section">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.backends.pygmt_backend.</span></span><span class="sig-name descname"><span class="pre">plot_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'temperature'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_coord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_coord</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'pressure'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpt_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundaries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'viridis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bathymetry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma2_contours</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'X8c/-6c'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(8,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/oceanvis_py/backends/pygmt_backend.html#plot_section"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.backends.pygmt_backend.plot_section" title="Link to this definition"></a></dt>
+<dd><p>Create section plot using PyGMT backend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>xarray.Dataset</em>) – Dataset containing oceanographic data</p></li>
+<li><p><strong>variable</strong> (<em>str</em><em>, </em><em>default 'temperature'</em>) – Variable to plot</p></li>
+<li><p><strong>x_coord</strong> (<em>str</em><em>, </em><em>default 'distance'</em>) – X-coordinate variable name</p></li>
+<li><p><strong>y_coord</strong> (<em>str</em><em>, </em><em>default 'pressure'</em>) – Y-coordinate variable name</p></li>
+<li><p><strong>cpt_file</strong> (<em>str</em><em> or </em><em>Path</em><em>, </em><em>optional</em>) – Path to PyGMT .cpt file. If provided, overrides boundaries and cmap_name</p></li>
+<li><p><strong>boundaries</strong> (<em>list</em><em> of </em><em>float</em><em>, </em><em>optional</em>) – Contour boundaries. If None and no cpt_file, uses automatic levels</p></li>
+<li><p><strong>cmap_name</strong> (<em>str</em><em>, </em><em>default 'viridis'</em>) – Matplotlib colormap name (ignored if cpt_file provided)</p></li>
+<li><p><strong>output_file</strong> (<em>str</em><em>, </em><em>optional</em>) – Output file path. If None, shows plot interactively</p></li>
+<li><p><strong>bathymetry</strong> (<em>bool</em><em>, </em><em>default True</em>) – Whether to show bathymetry polygon</p></li>
+<li><p><strong>sigma2_contours</strong> (<em>bool</em><em>, </em><em>default False</em>) – Whether to overlay sigma2 density contours</p></li>
+<li><p><strong>region</strong> (<em>list</em><em> of </em><em>float</em><em>, </em><em>optional</em>) – Plot region [xmin, xmax, ymin, ymax]. If None, uses data bounds</p></li>
+<li><p><strong>projection</strong> (<em>str</em><em>, </em><em>default 'X8c/-6c'</em>) – GMT projection string</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em><em>, </em><em>default</em><em> (</em><em>8</em><em>, </em><em>6</em><em>)</em>) – Figure size in cm (width, height)</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments for PyGMT functions</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Using a saved CPT file from interactive widget</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot_section</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="s1">&#39;SA&#39;</span><span class="p">,</span>
+<span class="gp">... </span>             <span class="n">cpt_file</span><span class="o">=</span><span class="s1">&#39;oceanvis_py/config/saved_colormaps/salinity_SAL_15levels.cpt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Using boundaries and colormap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot_section</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="s1">&#39;CT&#39;</span><span class="p">,</span> <span class="n">boundaries</span><span class="o">=</span><span class="p">[</span><span class="mf">2.7</span><span class="p">,</span> <span class="mf">2.8</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">],</span>
+<span class="gp">... </span>             <span class="n">cmap_name</span><span class="o">=</span><span class="s1">&#39;thermal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="setup.html" class="btn btn-neutral float-left" title="Getting Started: Setup and Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Eleanor Frajka-Williams, FirstName LastName.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
