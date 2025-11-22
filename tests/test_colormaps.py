@@ -79,11 +79,8 @@ class TestGetOceanographicColormap:
 
         for var in depth_vars:
             cmap = get_oceanographic_colormap(var)
-            if CMOCEAN_AVAILABLE:
-                assert hasattr(cmap, "name")
-                assert cmap.name == "TOPO"
-            else:
-                assert cmap == "Blues_r"
+            assert hasattr(cmap, "name")
+            assert cmap.name == "TOPO2"  # Both now use TOPO2 (Flemish Cap bathymetry)
 
     def test_unknown_variable(self):
         """Test colormap selection for unknown variables."""
