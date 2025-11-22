@@ -1,112 +1,146 @@
 # Getting Started: Setup and Installation
 
-This guide walks you through the setup process when starting a new project using this template, or contributing to one based on it. It includes instructions for both terminal users and those using GitHub Desktop.
+This guide walks you through installing and setting up oceanvis-py for oceanographic data visualization. Since the package is in active development, you'll install directly from the GitHub repository.
 
 ---
 
-## Step 1: Get the Repository
+## Step 1: Installation Options
 
-You have two choices, depending on whether you're making a copy for your own use or contributing to someone else's.
+Currently, oceanvis-py is in development and not yet published to PyPI. You'll need to install from the GitHub repository.
 
-### Option A: Use this template for your own project
+### Install from GitHub Repository
 
-You're making a fresh project based on this template.
-
-#### a. Clone the repository to your computer
+#### a. Clone the repository
 From a **terminal**:
 ```bash
-git clone https://github.com/eleanorfrajka/template-project
+git clone https://github.com/eleanorfrajka/oceanvis-py
+cd oceanvis-py
 ```
 
-Or in your **browser**:
-1. Navigate to [https://github.com/eleanorfrajka/template-project](https://github.com/eleanorfrajka/template-project)
-2. Click the green `<> Code` button.
-3. Choose **Open with GitHub Desktop**.
+Or using **GitHub Desktop**:
+1. Navigate to [https://github.com/eleanorfrajka/oceanvis-py](https://github.com/eleanorfrajka/oceanvis-py)
+2. Click the green `<> Code` button
+3. Choose **Open with GitHub Desktop**
 
-> 💡 You can rename the folder after cloning.
-
-#### b. (Optional) Change the remote origin
-If you want to push to your own GitHub repository, create a new repo on [GitHub.com](https://github.com) and set it as the remote:
-```bash
-git remote set-url origin https://github.com/YOUR_USERNAME/new-repo-name.git
-git push -u origin main
-```
-
-### Option B: Contribute to someone else's project
-See [Git Collaboration](gitcollab_v2.md) for full instructions on forking and branching when contributing to another repository.
+#### b. Contributing to the project
+See the contributing guide for full instructions on forking, branching, and submitting pull requests.
 
 ---
 
 ## Step 2: Set Up a Python Environment
 
-We recommend using a clean Python environment with `micromamba`, `conda`, `venv`, or similar. Below is the example using `venv`.
+We recommend using a clean Python environment. Oceanvis-py requires Python 3.9+ and has specific dependencies for scientific computing.
 
-<!---
-### Option A: Use `micromamba` (recommended for reproducibility)
-If you're using `micromamba`, create an environment from the included YAML file:
+### Option A: Using conda/mamba (Recommended)
+Conda handles the complex scientific dependencies more reliably:
 ```bash
-micromamba create -f environment.yml
-micromamba activate template_env
-```
---->
+conda create -n oceanvis python=3.11
+conda activate oceanvis
+conda install -c conda-forge matplotlib cartopy xarray netcdf4 cmocean
 
-### Option A: Use `venv` and `pip`
+# For development
+pip install -r requirements-dev.txt
+```
+
+### Option B: Using venv and pip
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
-pip install -r requirements-dev.txt  # For development tools and testing
+
+# For development
+pip install -r requirements-dev.txt
 ```
 
-> 🔁 These install all runtime and development dependencies.
+> ⚠️ **Note**: Some dependencies (especially cartopy) can be challenging to install with pip alone. Conda is recommended for easier setup.
 
 ---
 
-## Step 3: Install the Package (Editable Mode)
+## Step 3: Install the Package
 
-To use the code as an importable package:
+Install oceanvis-py in editable mode so you have access to the latest features:
 ```bash
 pip install -e .
 ```
-This sets up the local repository in *editable* mode, so changes you make to `.py` files will immediately be reflected when imported.
+This installs oceanvis-py in *editable* mode, so any updates to the source code are immediately available when you import the package.
 
 ---
 
-## Step 4: Test That It Works
+## Step 4: Verify Installation
 
-Try running the tests:
+### Quick Test
+Try importing the package:
+```python
+import oceanvis_py
+print(oceanvis_py.__version__)
+```
+
+### Run the Test Suite (Development)
+For development installations, run the full test suite:
 ```bash
 pytest
 ```
-If all goes well, this runs the unit tests in the `tests/` folder.
+This validates that all oceanographic data handling and plotting functions work correctly.
+
+### Try an Example
+Load and plot some example data (once example data is available):
+```python
+from oceanvis_py.plots import plot_section
+from oceanvis_py.core import data_loader
+
+# Example with test data (when implemented)
+# data = data_loader.load_example_data('ctd_section')
+# fig, ax = plot_section(data, variable='temperature')
+```
 
 ---
 
-## Optional: Use GitHub Desktop Instead of Terminal
+## Troubleshooting
 
-If you prefer not to use the terminal:
-- Clone the repo using GitHub Desktop.
-- Set up your Python environment using a tool like Anaconda or venv.
-- Open the project folder in VSCode.
-- Install the Python extension and interpreter.
-- Run test scripts in the terminal panel or from notebooks.
+### Common Installation Issues
 
-See also [faq.md](faq.md) for troubleshooting installation problems.
+**Cartopy installation fails:**
+```bash
+# Use conda instead of pip for geospatial dependencies
+conda install -c conda-forge cartopy
+```
+
+**PyGMT backend issues:**
+```bash
+# Optional - install GMT and PyGMT for additional backend
+conda install -c conda-forge gmt pygmt
+```
+
+**Missing test data:**
+```bash
+# Download example datasets (development only)
+python -c "from oceanvis_py.core.data_loader import download_test_data; download_test_data()"
+```
+
+### VSCode Setup
+For the best development experience:
+1. Install the Python extension
+2. Select your oceanvis environment as the interpreter
+3. Enable pytest for test discovery
+4. Install Jupyter extension for notebook examples
 
 
 ---
 
-## Git Workflows
+## Next Steps
 
-Depending on how you’re working:
+### For Users
+- Explore the [example notebooks](../notebooks/) for common oceanographic plotting workflows
+- Check out the [API documentation](oceanvis_py.rst) for detailed function references
+- Read the [plotting guide](tutorials/plotting_guide.md) for best practices
 
-- If you are **working on your own project** using this template, see: [Solo Git](gitworkflow_solo.md)
-- If you are **contributing to someone else’s project**, see: [Git Collaboration](gitcollab_v2.md)
-
-Both guides include step-by-step workflows with examples using Terminal, VSCode, and GitHub Desktop.
+### For Contributors
+- Review the [contributing guidelines](../CONTRIBUTING.md)
+- Read the [development workflow](development.md) documentation
+- Check the [style guide](style_guide.md) for coding standards
 
 ---
 
-## You're All Set!
+## You're Ready to Visualize!
 
-From here, you can start editing code, writing documentation, or adding tests.
+Oceanvis-py is now installed and ready for creating publication-quality oceanographic plots. Start with the example notebooks to see the package in action, or dive into the API documentation for detailed function references.
