@@ -165,7 +165,7 @@ def plot_bathymetry_map(
             # Replicates: gmt grdcontour data/coarse_topo.nc -C1000 -A- -Wfaint,100/100/100
             fig.grdcontour(
                 grid=contour_grid,
-                interval=contour_interval if contour_interval else 1000,
+                levels=contour_interval if contour_interval else 1000,
                 annotation=contour_interval if contour_interval else 1000,
                 pen="faint,100/100/100"
             )
@@ -252,18 +252,29 @@ def create_ship_track_map(
     # Read ship track to determine region if not provided
     if region is None:
         import pandas as pd
-        track_data = pd.read_csv(ship_track_file, delim_whitespace=True,
+        import numpy as np
+        track_data = pd.read_csv(ship_track_file, sep=r'\s+',
                                 names=['lon', 'lat'])
 
-        # Add buffer around track
-        lon_buffer = (track_data['lon'].max() - track_data['lon'].min()) * 0.1
-        lat_buffer = (track_data['lat'].max() - track_data['lat'].min()) * 0.1
+        # Check that track data is valid
+        if len(track_data) == 0:
+            raise ValueError("Ship track file is empty")
+        
+        # Add buffer around track - use numpy for safer min/max
+        lon_values = track_data['lon'].values
+        lat_values = track_data['lat'].values
+        
+        lon_min, lon_max = float(np.min(lon_values)), float(np.max(lon_values))
+        lat_min, lat_max = float(np.min(lat_values)), float(np.max(lat_values))
+        
+        lon_buffer = (lon_max - lon_min) * 0.1
+        lat_buffer = (lat_max - lat_min) * 0.1
 
         region = (
-            track_data['lon'].min() - lon_buffer,
-            track_data['lon'].max() + lon_buffer,
-            track_data['lat'].min() - lat_buffer,
-            track_data['lat'].max() + lat_buffer
+            lon_min - lon_buffer,
+            lon_max + lon_buffer,
+            lat_min - lat_buffer,
+            lat_max + lat_buffer
         )
 
     return plot_bathymetry_map(
@@ -338,7 +349,7 @@ def plot_multi_track_map(
             # Add label if provided
             if track_labels and i < len(track_labels):
                 # Position labels at start of each track
-                track_data = pd.read_csv(track_file, delim_whitespace=True,
+                track_data = pd.read_csv(track_file, sep=r'\s+',
                                        names=['lon', 'lat'])
                 fig.text(
                     x=track_data['lon'].iloc[0],
