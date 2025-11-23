@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publication-Quality PyGMT Section Plots &mdash; template_project v0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=20758594" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8b92e751"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="oceanvis_py API" href="oceanvis_py.html" />
+    <link rel="prev" title="Getting Started: Setup and Installation" href="setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            template_project
+              <img src="_static/logo_template.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Getting Started: Setup and Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Usage Examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Publication-Quality PyGMT Section Plots</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Data-Loading">Data Loading</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="oceanvis_py.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">oceanvis_py</span> <span class="pre">API</span></code></a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Help and reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/eleanorfrajka/oceanvis-py">GitHub Repo</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">template_project</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Publication-Quality PyGMT Section Plots</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/example_map_plot-output.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Publication-Quality-PyGMT-Section-Plots">
+<h1>Publication-Quality PyGMT Section Plots<a class="headerlink" href="#Publication-Quality-PyGMT-Section-Plots" title="Link to this heading"></a></h1>
+<p>Generate beautiful PyGMT section plots for:</p>
+<ol class="arabic simple">
+<li><p>M212 072 towyo section</p></li>
+<li><p>M212 074 towyo section</p></li>
+<li><p>Additional hydrographic sections</p></li>
+</ol>
+<p>All plots include CT, SA, and water depth annotations using PyGMT for professional publication quality.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>  <span class="c1"># Test the new TOPO2 (Flemish Cap) colormap</span>
+  <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+  <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+  <span class="kn">from</span><span class="w"> </span><span class="nn">oceanvis_py.core.colormaps</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_oceanographic_colormap</span><span class="p">,</span> <span class="n">get_bathymetry_colormap</span>
+  <span class="kn">from</span><span class="w"> </span><span class="nn">oceanvis_py.core.custom_colormaps</span><span class="w"> </span><span class="kn">import</span> <span class="n">CUSTOM_COLORMAPS</span>
+
+  <span class="c1"># Create sample bathymetry data</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">56</span><span class="p">,</span> <span class="o">-</span><span class="mi">36</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+  <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+  <span class="c1"># Simulate bathymetry: deeper in center, shallower near edges</span>
+  <span class="n">Z</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4000</span> <span class="o">+</span> <span class="mi">3000</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="n">X</span> <span class="o">+</span> <span class="mi">46</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">Y</span> <span class="o">-</span> <span class="mi">46</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">50</span><span class="p">)</span>
+
+  <span class="c1"># Plot 1: Test TOPO2 colormap directly</span>
+  <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+  <span class="c1"># TOPO2 (Flemish Cap bathymetry)</span>
+  <span class="n">im1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;TOPO2&quot;</span><span class="p">])</span>
+  <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;TOPO2 (Flemish Cap) Colormap&quot;</span><span class="p">)</span>
+  <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Longitude&quot;</span><span class="p">)</span>
+  <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Latitude&quot;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Depth (m)&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Original TOPO for comparison</span>
+  <span class="n">im2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;TOPO&quot;</span><span class="p">])</span>
+  <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Original TOPO Colormap&quot;</span><span class="p">)</span>
+  <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Longitude&quot;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Depth (m)&quot;</span><span class="p">)</span>
+
+  <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+  <span class="c1"># Test automatic colormap selection</span>
+  <span class="n">bathymetry_cmap</span> <span class="o">=</span> <span class="n">get_oceanographic_colormap</span><span class="p">(</span><span class="s2">&quot;bathymetry&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Default bathymetry colormap: </span><span class="si">{</span><span class="n">bathymetry_cmap</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Test PyGMT colormap path</span>
+  <span class="n">cpt_path</span> <span class="o">=</span> <span class="n">get_bathymetry_colormap</span><span class="p">(</span><span class="s2">&quot;flemish_cap&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PyGMT colormap path: </span><span class="si">{</span><span class="n">cpt_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Show available bathymetry styles</span>
+  <span class="k">for</span> <span class="n">style</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;flemish_cap&quot;</span><span class="p">,</span> <span class="s2">&quot;topo2&quot;</span><span class="p">,</span> <span class="s2">&quot;topo&quot;</span><span class="p">]:</span>
+      <span class="k">try</span><span class="p">:</span>
+          <span class="n">path</span> <span class="o">=</span> <span class="n">get_bathymetry_colormap</span><span class="p">(</span><span class="n">style</span><span class="p">)</span>
+          <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Style &#39;</span><span class="si">{</span><span class="n">style</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+          <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Style &#39;</span><span class="si">{</span><span class="n">style</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Create a colorbar comparison</span>
+  <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+  <span class="c1"># Sample data range from deep ocean to land</span>
+  <span class="n">depths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+  <span class="c1"># Plot each colormap</span>
+  <span class="n">colormaps</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">(</span><span class="s2">&quot;TOPO2 (Flemish Cap)&quot;</span><span class="p">,</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;TOPO2&quot;</span><span class="p">]),</span>
+      <span class="p">(</span><span class="s2">&quot;TOPO (Original)&quot;</span><span class="p">,</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;TOPO&quot;</span><span class="p">]),</span>
+      <span class="p">(</span><span class="s2">&quot;Viridis (Default)&quot;</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">)</span>
+  <span class="p">]</span>
+
+  <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">cmap</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">colormaps</span><span class="p">):</span>
+      <span class="n">im</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">depths</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+      <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+      <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Depth (m)&quot;</span><span class="p">)</span>
+      <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+  <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+  <span class="c1"># Quick test of all available custom colormaps</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Available custom colormaps:&quot;</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">cmap</span> <span class="ow">in</span> <span class="n">CUSTOM_COLORMAPS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">cmap</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/example_map_plot-output_1_0.png" src="_images/example_map_plot-output_1_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Default bathymetry colormap: TOPO2
+PyGMT colormap path: /home/runner/work/oceanvis-py/oceanvis-py/oceanvis_py/config/saved_colormaps/topo_negative.cpt
+Style &#39;flemish_cap&#39;: /home/runner/work/oceanvis-py/oceanvis-py/oceanvis_py/config/saved_colormaps/topo_negative.cpt
+Style &#39;topo2&#39;: /home/runner/work/oceanvis-py/oceanvis-py/oceanvis_py/config/saved_colormaps/topo_negative.cpt
+Style &#39;topo&#39;: /home/runner/work/oceanvis-py/oceanvis-py/oceanvis_py/config/saved_colormaps/topo.cpt
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/example_map_plot-output_1_2.png" src="_images/example_map_plot-output_1_2.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Available custom colormaps:
+  TEMP2: TEMP2
+  TEMP: TEMP
+  SAL: SAL
+  TOPO: TOPO
+  TOPO2: TOPO2
+  POLAR: POLAR
+  OXY: OXY
+  PurGre: PurGre
+  CHL: CHL
+  Y2R: Y2R
+  BLUE: BLUE
+  CAT: CAT
+</pre></div></div>
+</div>
+<section id="Data-Loading">
+<h2>Data Loading<a class="headerlink" href="#Data-Loading" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Updated approach using fixed oceanvis-py plot_bathymetry_map function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oceanvis_py.plots.maps</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_bathymetry_map</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oceanvis_py.core.colormaps</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_bathymetry_colormap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Define region</span>
+<span class="n">region</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">56</span><span class="p">,</span> <span class="o">-</span><span class="mi">36</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">52</span><span class="p">)</span>
+<span class="n">bathymetry_file</span> <span class="o">=</span> <span class="s2">&quot;/Users/eddifying/Dropbox/data/GEBCO2/netcdf/M212_bathy_38N.52N_056W.036W.nc&quot;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Get the figure object to continue adding annotations</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">temp_bathy</span> <span class="o">=</span> <span class="n">plot_bathymetry_map</span><span class="p">(</span>
+        <span class="n">bathymetry_file</span><span class="o">=</span><span class="n">bathymetry_file</span><span class="p">,</span>
+        <span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span>
+        <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;M5i&quot;</span><span class="p">,</span>
+        <span class="n">cpt_file</span><span class="o">=</span><span class="n">get_bathymetry_colormap</span><span class="p">(</span><span class="s2">&quot;flemish_cap&quot;</span><span class="p">),</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;M212 cruise track&quot;</span><span class="p">,</span>
+        <span class="n">output_file</span><span class="o">=</span><span class="s2">&quot;map_m212_complete.png&quot;</span><span class="p">,</span>
+        <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+        <span class="n">return_figure</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># Get figure object back</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Add the geographic annotations to the same figure</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mf">51.25</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">44.55</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;G R A N D&quot;</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;CB&quot;</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;8p,Helvetica-BoldOblique,100/100/100&quot;</span><span class="p">,</span> <span class="n">no_clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mf">51.25</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">44.45</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;B A N K S&quot;</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;CT&quot;</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;8p,Helvetica-BoldOblique,100/100/100&quot;</span><span class="p">,</span> <span class="n">no_clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">45</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">47.05</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;F L E M I S H&quot;</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;CB&quot;</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;8p,Helvetica-BoldOblique,100/100/100&quot;</span><span class="p">,</span> <span class="n">no_clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">45</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">46.95</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;C A P&quot;</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;CT&quot;</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;8p,Helvetica-BoldOblique,100/100/100&quot;</span><span class="p">,</span> <span class="n">no_clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Save the complete map with annotations</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;map_m212_complete.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="c1"># Clean up temporary file</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">temp_bathy</span><span class="p">)</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✓ Created complete map with annotations&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Check that PyGMT is properly installed and the bathymetry file path is correct&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Error: Error loading GMT shared library at &#39;libgmt.so&#39;.
+libgmt.so: cannot open shared object file: No such file or directory
+Check that PyGMT is properly installed and the bathymetry file path is correct
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Copy ship track files and create map with tracks</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oceanvis_py.plots.maps</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_bathymetry_map</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oceanvis_py.core.colormaps</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_bathymetry_colormap</span>
+
+<span class="c1"># Copy ship track files</span>
+<span class="n">source_pattern</span> <span class="o">=</span> <span class="s2">&quot;/Users/eddifying/Cloudfree/github/oceanvis-py/notebooks/gmtdata/ship_track_m212*.xy&quot;</span>
+<span class="n">dest_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+<span class="n">dest_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Find and copy all matching files</span>
+<span class="n">track_files</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">source_file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">source_pattern</span><span class="p">):</span>
+    <span class="n">dest_file</span> <span class="o">=</span> <span class="n">dest_dir</span> <span class="o">/</span> <span class="n">Path</span><span class="p">(</span><span class="n">source_file</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">source_file</span><span class="p">,</span> <span class="n">dest_file</span><span class="p">)</span>
+    <span class="n">track_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dest_file</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Copied: </span><span class="si">{</span><span class="n">Path</span><span class="p">(</span><span class="n">source_file</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Define region and bathymetry file</span>
+<span class="n">region</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">56</span><span class="p">,</span> <span class="o">-</span><span class="mi">36</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">52</span><span class="p">)</span>
+<span class="n">bathymetry_file</span> <span class="o">=</span> <span class="s2">&quot;/Users/eddifying/Dropbox/data/GEBCO2/netcdf/M212_bathy_38N.52N_056W.036W.nc&quot;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Create map with ship track(s)</span>
+    <span class="k">if</span> <span class="n">track_files</span><span class="p">:</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">temp_bathy</span> <span class="o">=</span> <span class="n">plot_bathymetry_map</span><span class="p">(</span>
+            <span class="n">bathymetry_file</span><span class="o">=</span><span class="n">bathymetry_file</span><span class="p">,</span>
+            <span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span>
+            <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;M5i&quot;</span><span class="p">,</span>
+            <span class="n">cpt_file</span><span class="o">=</span><span class="n">get_bathymetry_colormap</span><span class="p">(</span><span class="s2">&quot;flemish_cap&quot;</span><span class="p">),</span>
+            <span class="n">ship_track_file</span><span class="o">=</span><span class="n">track_files</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># Use first track file</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;M212 cruise track&quot;</span><span class="p">,</span>
+            <span class="n">output_file</span><span class="o">=</span><span class="s2">&quot;map_m212_with_track.png&quot;</span><span class="p">,</span>
+            <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+            <span class="n">return_figure</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Add geographic annotations</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mf">51.25</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">44.55</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;G R A N D&quot;</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;CB&quot;</span><span class="p">,</span>
+                <span class="n">font</span><span class="o">=</span><span class="s2">&quot;8p,Helvetica-BoldOblique,100/100/100&quot;</span><span class="p">,</span> <span class="n">no_clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mf">51.25</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">44.45</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;B A N K S&quot;</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;CT&quot;</span><span class="p">,</span>
+                <span class="n">font</span><span class="o">=</span><span class="s2">&quot;8p,Helvetica-BoldOblique,100/100/100&quot;</span><span class="p">,</span> <span class="n">no_clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">45</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">47.05</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;F L E M I S H&quot;</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;CB&quot;</span><span class="p">,</span>
+                <span class="n">font</span><span class="o">=</span><span class="s2">&quot;8p,Helvetica-BoldOblique,100/100/100&quot;</span><span class="p">,</span> <span class="n">no_clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">45</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">46.95</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;C A P&quot;</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;CT&quot;</span><span class="p">,</span>
+                <span class="n">font</span><span class="o">=</span><span class="s2">&quot;8p,Helvetica-BoldOblique,100/100/100&quot;</span><span class="p">,</span> <span class="n">no_clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Save and show</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;map_m212_with_track.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="c1"># Clean up</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">Path</span><span class="p">(</span><span class="n">temp_bathy</span><span class="p">)</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✓ Created map with ship track: </span><span class="si">{</span><span class="n">track_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✓ Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">track_files</span><span class="p">)</span><span class="si">}</span><span class="s2"> track files total&quot;</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No ship track files found matching the pattern&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Check file paths and PyGMT installation&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+No ship track files found matching the pattern
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="setup.html" class="btn btn-neutral float-left" title="Getting Started: Setup and Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="oceanvis_py.html" class="btn btn-neutral float-right" title="oceanvis_py API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Eleanor Frajka-Williams, FirstName LastName.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

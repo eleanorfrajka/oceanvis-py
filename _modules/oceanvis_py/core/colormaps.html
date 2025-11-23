@@ -17,6 +17,7 @@
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -45,6 +46,10 @@
               <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../setup.html">Getting Started: Setup and Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Usage Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../example_map_plot-output.html">Publication-Quality PyGMT Section Plots</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul>
@@ -87,6 +92,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="k">try</span><span class="p">:</span>
@@ -126,8 +132,8 @@
         <span class="s2">&quot;salinity&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;SAL&quot;</span><span class="p">],</span>
         <span class="s2">&quot;SA&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;SAL&quot;</span><span class="p">],</span>
         <span class="s2">&quot;absolute_salinity&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;SAL&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;bathymetry&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;TOPO&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;depth&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;TOPO&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;bathymetry&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;TOPO2&quot;</span><span class="p">],</span>  <span class="c1"># Use Flemish Cap bathymetry as default</span>
+        <span class="s2">&quot;depth&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;TOPO2&quot;</span><span class="p">],</span>
         <span class="s2">&quot;oxygen&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;OXY&quot;</span><span class="p">],</span>
         <span class="s2">&quot;density&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;PurGre&quot;</span><span class="p">],</span>
         <span class="s2">&quot;sigma2&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;PurGre&quot;</span><span class="p">],</span>
@@ -142,7 +148,7 @@
                 <span class="s2">&quot;v_velocity&quot;</span><span class="p">:</span> <span class="n">cmocean</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">balance</span><span class="p">,</span>
                 <span class="s2">&quot;u_across&quot;</span><span class="p">:</span> <span class="n">cmocean</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">balance</span><span class="p">,</span>
                 <span class="s2">&quot;v_along&quot;</span><span class="p">:</span> <span class="n">cmocean</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">balance</span><span class="p">,</span>
-                <span class="s2">&quot;pressure&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;TOPO&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;pressure&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;TOPO2&quot;</span><span class="p">],</span>
             <span class="p">}</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -153,11 +159,73 @@
                 <span class="s2">&quot;v_velocity&quot;</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdBu_r</span><span class="p">,</span>
                 <span class="s2">&quot;u_across&quot;</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdBu_r</span><span class="p">,</span>
                 <span class="s2">&quot;v_along&quot;</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdBu_r</span><span class="p">,</span>
-                <span class="s2">&quot;pressure&quot;</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues_r</span><span class="p">,</span>
+                <span class="s2">&quot;pressure&quot;</span><span class="p">:</span> <span class="n">CUSTOM_COLORMAPS</span><span class="p">[</span><span class="s2">&quot;TOPO2&quot;</span><span class="p">],</span>
             <span class="p">}</span>
         <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">colormap_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_saved_colormap_path">
+<a class="viewcode-back" href="../../../oceanvis_py.html#oceanvis_py.core.colormaps.get_saved_colormap_path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_saved_colormap_path</span><span class="p">(</span><span class="n">colormap_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get path to a saved colormap file in the config directory.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    colormap_name : str</span>
+<span class="sd">        Name of the colormap file (with or without .cpt extension)</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Path</span>
+<span class="sd">        Path to the colormap file</span>
+<span class="sd">        </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; path = get_saved_colormap_path(&quot;topo_negative&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; path = get_saved_colormap_path(&quot;topo_negative.cpt&quot;) </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">colormap_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.cpt&#39;</span><span class="p">):</span>
+        <span class="n">colormap_name</span> <span class="o">+=</span> <span class="s1">&#39;.cpt&#39;</span>
+    
+    <span class="n">config_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;config&quot;</span> <span class="o">/</span> <span class="s2">&quot;saved_colormaps&quot;</span>
+    <span class="k">return</span> <span class="n">config_dir</span> <span class="o">/</span> <span class="n">colormap_name</span></div>
+
+
+
+<div class="viewcode-block" id="get_bathymetry_colormap">
+<a class="viewcode-back" href="../../../oceanvis_py.html#oceanvis_py.core.colormaps.get_bathymetry_colormap">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_bathymetry_colormap</span><span class="p">(</span><span class="n">style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;flemish_cap&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get path to bathymetry colormap for PyGMT plotting.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    style : str, optional</span>
+<span class="sd">        Bathymetry colormap style:</span>
+<span class="sd">        - &quot;flemish_cap&quot;: Custom Flemish Cap bathymetry colormap (default)</span>
+<span class="sd">        - &quot;topo&quot;: Standard TOPO colormap</span>
+<span class="sd">        - &quot;topo2&quot;: Alias for &quot;flemish_cap&quot;</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        Path to the .cpt colormap file</span>
+<span class="sd">        </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The &quot;flemish_cap&quot; colormap is also available as matplotlib colormap </span>
+<span class="sd">    CUSTOM_COLORMAPS[&quot;TOPO2&quot;] for use in matplotlib plots.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">style</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;flemish_cap&quot;</span><span class="p">,</span> <span class="s2">&quot;topo2&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">get_saved_colormap_path</span><span class="p">(</span><span class="s2">&quot;topo_negative&quot;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">style</span> <span class="o">==</span> <span class="s2">&quot;topo&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">get_saved_colormap_path</span><span class="p">(</span><span class="s2">&quot;topo&quot;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown bathymetry style: </span><span class="si">{</span><span class="n">style</span><span class="si">}</span><span class="s2">. Available: &#39;flemish_cap&#39;, &#39;topo2&#39;, &#39;topo&#39;&quot;</span><span class="p">)</span></div>
 
 
 

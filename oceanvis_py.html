@@ -18,10 +18,11 @@
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Getting Started: Setup and Installation" href="setup.html" /> 
+    <link rel="prev" title="Publication-Quality PyGMT Section Plots" href="example_map_plot-output.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,6 +49,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Getting Started: Setup and Installation</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Usage Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="example_map_plot-output.html">Publication-Quality PyGMT Section Plots</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">oceanvis_py</span> <span class="pre">API</span></code></a><ul>
@@ -61,14 +66,19 @@
 <li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.coordinates.calculate_distance"><code class="docutils literal notranslate"><span class="pre">calculate_distance()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.coordinates.cumulative_distance_from_coordinates"><code class="docutils literal notranslate"><span class="pre">cumulative_distance_from_coordinates()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.coordinates.distance_from_coordinates"><code class="docutils literal notranslate"><span class="pre">distance_from_coordinates()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.colormaps.get_bathymetry_colormap"><code class="docutils literal notranslate"><span class="pre">get_bathymetry_colormap()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.colormaps.get_oceanographic_colormap"><code class="docutils literal notranslate"><span class="pre">get_oceanographic_colormap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.colormaps.get_saved_colormap_path"><code class="docutils literal notranslate"><span class="pre">get_saved_colormap_path()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.core.colormaps.save_colormap_preferences"><code class="docutils literal notranslate"><span class="pre">save_colormap_preferences()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#plotting-functions">Plotting Functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.sections.plot_dual_section"><code class="docutils literal notranslate"><span class="pre">plot_dual_section()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.sections.plot_section"><code class="docutils literal notranslate"><span class="pre">plot_section()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.maps.create_ship_track_map"><code class="docutils literal notranslate"><span class="pre">create_ship_track_map()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.maps.plot_bathymetry_map"><code class="docutils literal notranslate"><span class="pre">plot_bathymetry_map()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.maps.plot_map"><code class="docutils literal notranslate"><span class="pre">plot_map()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.maps.plot_multi_track_map"><code class="docutils literal notranslate"><span class="pre">plot_multi_track_map()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.widgets.ColorMapWidget"><code class="docutils literal notranslate"><span class="pre">ColorMapWidget</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#oceanvis_py.plots.widgets.InteractiveColormapWidget"><code class="docutils literal notranslate"><span class="pre">InteractiveColormapWidget</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#oceanvis_py.plots.widgets.InteractiveColormapWidget.display"><code class="docutils literal notranslate"><span class="pre">InteractiveColormapWidget.display()</span></code></a></li>
@@ -314,6 +324,29 @@ If False, calculate distance from first point.</p></li>
 <p id="module-oceanvis_py.core.colormaps">Colormap utilities for oceanographic data visualization.</p>
 <p>Uses cmocean colormaps and custom colormaps for oceanographic variables.</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.colormaps.get_bathymetry_colormap">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.colormaps.</span></span><span class="sig-name descname"><span class="pre">get_bathymetry_colormap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'flemish_cap'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/oceanvis_py/core/colormaps.html#get_bathymetry_colormap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.colormaps.get_bathymetry_colormap" title="Link to this definition"></a></dt>
+<dd><p>Get path to bathymetry colormap for PyGMT plotting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>style</strong> (<em>str</em><em>, </em><em>optional</em>) – Bathymetry colormap style:
+- “flemish_cap”: Custom Flemish Cap bathymetry colormap (default)
+- “topo”: Standard TOPO colormap
+- “topo2”: Alias for “flemish_cap”</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the .cpt colormap file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The “flemish_cap” colormap is also available as matplotlib colormap
+CUSTOM_COLORMAPS[“TOPO2”] for use in matplotlib plots.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="oceanvis_py.core.colormaps.get_oceanographic_colormap">
 <span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.colormaps.</span></span><span class="sig-name descname"><span class="pre">get_oceanographic_colormap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'temperature'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/oceanvis_py/core/colormaps.html#get_oceanographic_colormap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.colormaps.get_oceanographic_colormap" title="Link to this definition"></a></dt>
 <dd><p>Get appropriate colormap for oceanographic variable.</p>
@@ -328,6 +361,28 @@ If False, calculate distance from first point.</p></li>
 <dd class="field-odd"><p>matplotlib colormap or str</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.core.colormaps.get_saved_colormap_path">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.core.colormaps.</span></span><span class="sig-name descname"><span class="pre">get_saved_colormap_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">colormap_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="reference internal" href="_modules/oceanvis_py/core/colormaps.html#get_saved_colormap_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.core.colormaps.get_saved_colormap_path" title="Link to this definition"></a></dt>
+<dd><p>Get path to a saved colormap file in the config directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>colormap_name</strong> (<em>str</em>) – Name of the colormap file (with or without .cpt extension)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the colormap file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">get_saved_colormap_path</span><span class="p">(</span><span class="s2">&quot;topo_negative&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">get_saved_colormap_path</span><span class="p">(</span><span class="s2">&quot;topo_negative.cpt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -408,12 +463,83 @@ If False, calculate distance from first point.</p></li>
 </dl>
 </dd></dl>
 
-<p id="module-oceanvis_py.plots.maps">Map plotting functionality for oceanographic data.</p>
-<p>Placeholder implementation - will be expanded in future development.</p>
+<p id="module-oceanvis_py.plots.maps">Bathymetry and track mapping functions using PyGMT.</p>
+<p>This module provides functions for creating publication-quality bathymetry maps
+with optional ship track overlays and contour lines.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.maps.create_ship_track_map">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.maps.</span></span><span class="sig-name descname"><span class="pre">create_ship_track_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ship_track_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bathymetry_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ship_track_map.png'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/maps.html#create_ship_track_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.maps.create_ship_track_map" title="Link to this definition"></a></dt>
+<dd><p>Create a bathymetry map focused on a ship track.</p>
+<p>Convenience function that automatically determines the region from
+the ship track data and creates a bathymetry map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ship_track_file</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to ship track file (lon, lat format)</p></li>
+<li><p><strong>bathymetry_file</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to bathymetry grid file</p></li>
+<li><p><strong>region</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Map region. If None, automatically determined from track data</p></li>
+<li><p><strong>output_file</strong> (<em>str</em><em>, </em><em>optional</em>) – Output filename</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments passed to plot_bathymetry_map</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the created map file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.maps.plot_bathymetry_map">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.maps.</span></span><span class="sig-name descname"><span class="pre">plot_bathymetry_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bathymetry_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'M5i'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpt_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ship_track_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'bathymetry_map.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contour_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contour_interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_figure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/maps.html#plot_bathymetry_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.maps.plot_bathymetry_map" title="Link to this definition"></a></dt>
+<dd><p>Create a bathymetry map with optional ship track and contours.</p>
+<p>This function replicates the functionality of a GMT script for creating
+publication-quality bathymetry maps using PyGMT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bathymetry_file</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to the bathymetry grid file (NetCDF format)</p></li>
+<li><p><strong>region</strong> (<em>tuple</em><em> of </em><em>float</em>) – Map region as (west, east, south, north) in degrees</p></li>
+<li><p><strong>projection</strong> (<em>str</em><em>, </em><em>optional</em>) – GMT projection string (default: “M5i” for 5-inch wide Mercator)</p></li>
+<li><p><strong>cpt_file</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to colormap file. If None, uses a default bathymetry colormap</p></li>
+<li><p><strong>ship_track_file</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to ship track file (lon, lat format)</p></li>
+<li><p><strong>output_file</strong> (<em>str</em><em>, </em><em>optional</em>) – Output filename (default: “bathymetry_map.png”)</p></li>
+<li><p><strong>dpi</strong> (<em>int</em><em>, </em><em>optional</em>) – Output resolution (default: 300)</p></li>
+<li><p><strong>contour_file</strong> (<em>str</em><em>, </em><em>optional</em>) – Separate grid file for contours (if different from bathymetry_file)</p></li>
+<li><p><strong>contour_interval</strong> (<em>int</em><em>, </em><em>optional</em>) – Contour interval in meters (default: 1000m)</p></li>
+<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – Map title</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments passed to grdimage</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the created map file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Basic bathymetry map:
+&gt;&gt;&gt; plot_bathymetry_map(
+…     bathymetry_file=”bathy.nc”,
+…     region=(-56, -36, 40, 52),
+…     cpt_file=”topo_negative.cpt”
+… )</p>
+<p>With ship track:
+&gt;&gt;&gt; plot_bathymetry_map(
+…     bathymetry_file=”bathy.nc”,
+…     region=(-56, -36, 40, 52),
+…     ship_track_file=”ship_track.xy”,
+…     title=”M212 Cruise Track”
+… )</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="oceanvis_py.plots.maps.plot_map">
-<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.maps.</span></span><span class="sig-name descname"><span class="pre">plot_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bathymetry_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Figure</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Axes</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/maps.html#plot_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.maps.plot_map" title="Link to this definition"></a></dt>
-<dd><p>Create bathymetry map with optional profile locations.</p>
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.maps.</span></span><span class="sig-name descname"><span class="pre">plot_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bathymetry_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/maps.html#plot_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.maps.plot_map" title="Link to this definition"></a></dt>
+<dd><p>Legacy function - use plot_bathymetry_map instead.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -422,14 +548,37 @@ If False, calculate distance from first point.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(figure, axes) objects</p>
+<dd class="field-even"><p>Path to the created map file</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
-<p>Placeholder implementation - will be fully implemented later.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="oceanvis_py.plots.maps.plot_multi_track_map">
+<span class="sig-prename descclassname"><span class="pre">oceanvis_py.plots.maps.</span></span><span class="sig-name descname"><span class="pre">plot_multi_track_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">track_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bathymetry_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">track_colors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">track_labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'multi_track_map.png'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/oceanvis_py/plots/maps.html#plot_multi_track_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#oceanvis_py.plots.maps.plot_multi_track_map" title="Link to this definition"></a></dt>
+<dd><p>Create a bathymetry map with multiple ship tracks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>track_files</strong> (<em>list</em><em> of </em><em>str/Path</em>) – List of paths to ship track files</p></li>
+<li><p><strong>bathymetry_file</strong> (<em>str</em><em> or </em><em>Path</em>) – Path to bathymetry grid file</p></li>
+<li><p><strong>region</strong> (<em>tuple</em>) – Map region as (west, east, south, north)</p></li>
+<li><p><strong>track_colors</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Colors for each track (GMT color format)</p></li>
+<li><p><strong>track_labels</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Labels for each track</p></li>
+<li><p><strong>output_file</strong> (<em>str</em><em>, </em><em>optional</em>) – Output filename</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments passed to plot_bathymetry_map</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the created map file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
 </dd></dl>
 
 <p id="module-oceanvis_py.plots.widgets">Interactive widgets for colormap exploration and nonlinear colorbar tuning.</p>
@@ -733,7 +882,7 @@ integration with the interactive colormap widgets.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="setup.html" class="btn btn-neutral float-left" title="Getting Started: Setup and Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example_map_plot-output.html" class="btn btn-neutral float-left" title="Publication-Quality PyGMT Section Plots" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
