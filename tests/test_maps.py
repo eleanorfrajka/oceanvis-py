@@ -16,9 +16,9 @@ try:
     import pygmt
     HAVE_PYGMT = True
     PYGMT_SKIP_REASON = "PyGMT is available"  # This won't be used, but pytest requires a string
-except ImportError:
+except Exception:  # Catch both ImportError and GMT library loading errors
     HAVE_PYGMT = False
-    PYGMT_SKIP_REASON = "PyGMT not available"
+    PYGMT_SKIP_REASON = "PyGMT or GMT not available"
 
 
 def create_test_bathymetry_file(temp_dir):
