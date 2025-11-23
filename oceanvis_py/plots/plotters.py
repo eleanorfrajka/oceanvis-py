@@ -116,8 +116,8 @@ def make_pygmt_grid(ds, x_var_name, y_var_name, z_data_matrix):
 def generate_cpt_file_simple(boundaries, cmap_name, output_cpt):
     """
     Generate a .cpt file from a matplotlib colormap and value boundaries.
-    
-    Note: This is a simpler version. For advanced features, use 
+
+    Note: This is a simpler version. For advanced features, use
     oceanvis_py.plots.widgets.generate_cpt_file instead.
 
     Parameters
