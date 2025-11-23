@@ -216,3 +216,131 @@ class TestColormapConsistency:
 
         # All should be the same
         assert all(cmap == colormaps[0] for cmap in colormaps)
+
+
+class TestColormapUtilityFunctions:
+    """Test new colormap utility functions."""
+
+    def test_get_saved_colormap_path_with_extension(self):
+        """Test getting path to colormap file with .cpt extension."""
+        from oceanvis_py.core.colormaps import get_saved_colormap_path
+        from pathlib import Path
+
+        path = get_saved_colormap_path("topo_negative.cpt")
+        
+        assert isinstance(path, Path)
+        assert path.name == "topo_negative.cpt"
+        assert "saved_colormaps" in str(path)
+        assert str(path).endswith("topo_negative.cpt")
+
+    def test_get_saved_colormap_path_without_extension(self):
+        """Test getting path to colormap file without .cpt extension."""
+        from oceanvis_py.core.colormaps import get_saved_colormap_path
+        from pathlib import Path
+
+        path = get_saved_colormap_path("topo_negative")
+        
+        assert isinstance(path, Path)
+        assert path.name == "topo_negative.cpt"
+        assert "saved_colormaps" in str(path)
+
+    def test_get_bathymetry_colormap_flemish_cap(self):
+        """Test getting Flemish Cap bathymetry colormap."""
+        from oceanvis_py.core.colormaps import get_bathymetry_colormap
+
+        # Test default (flemish_cap)
+        path = get_bathymetry_colormap()
+        assert isinstance(path, str)
+        assert path.endswith("topo_negative.cpt")
+
+        # Test explicit flemish_cap
+        path = get_bathymetry_colormap("flemish_cap")
+        assert isinstance(path, str)
+        assert path.endswith("topo_negative.cpt")
+
+    def test_get_bathymetry_colormap_topo2_alias(self):
+        """Test that topo2 is an alias for flemish_cap."""
+        from oceanvis_py.core.colormaps import get_bathymetry_colormap
+
+        flemish_path = get_bathymetry_colormap("flemish_cap")
+        topo2_path = get_bathymetry_colormap("topo2")
+        
+        assert flemish_path == topo2_path
+
+    def test_get_bathymetry_colormap_topo(self):
+        """Test getting original TOPO bathymetry colormap."""
+        from oceanvis_py.core.colormaps import get_bathymetry_colormap
+
+        path = get_bathymetry_colormap("topo")
+        assert isinstance(path, str)
+        assert path.endswith("topo.cpt")
+
+    def test_get_bathymetry_colormap_invalid_style(self):
+        """Test error handling for invalid bathymetry style."""
+        from oceanvis_py.core.colormaps import get_bathymetry_colormap
+        import pytest
+
+        with pytest.raises(ValueError, match="Unknown bathymetry style"):
+            get_bathymetry_colormap("invalid_style")
+
+    def test_colormap_files_exist(self):
+        """Test that the referenced colormap files actually exist."""
+        from oceanvis_py.core.colormaps import get_bathymetry_colormap
+        from pathlib import Path
+
+        # Test that flemish_cap colormap file exists
+        flemish_path = get_bathymetry_colormap("flemish_cap")
+        assert Path(flemish_path).exists(), f"Flemish Cap colormap not found: {flemish_path}"
+
+        # Note: We can't test topo.cpt existence since it might not be included yet
+
+
+class TestTOPO2Colormap:
+    """Test the new TOPO2 (Flemish Cap) colormap."""
+
+    def test_topo2_colormap_exists(self):
+        """Test that TOPO2 colormap exists in custom colormaps."""
+        from oceanvis_py.core.custom_colormaps import CUSTOM_COLORMAPS
+        import numpy as np
+
+        assert "TOPO2" in CUSTOM_COLORMAPS
+        topo2_cmap = CUSTOM_COLORMAPS["TOPO2"]
+        
+        # Should be a function that returns colors
+        assert callable(topo2_cmap)
+        
+        # Test that it returns reasonable colors
+        colors = topo2_cmap(np.linspace(0, 1, 10))
+        assert colors.shape == (10, 4)  # RGBA format
+        assert np.all(colors >= 0) and np.all(colors <= 1)  # Valid color range
+
+    def test_topo2_bathymetry_integration(self):
+        """Test that TOPO2 is used for bathymetry variables."""
+        from oceanvis_py.core.colormaps import get_oceanographic_colormap
+
+        # Test that bathymetry and depth use TOPO2
+        bathy_cmap = get_oceanographic_colormap("bathymetry")
+        depth_cmap = get_oceanographic_colormap("depth")
+        
+        assert hasattr(bathy_cmap, "name")
+        assert hasattr(depth_cmap, "name")
+        assert bathy_cmap.name == "TOPO2"
+        assert depth_cmap.name == "TOPO2"
+
+    def test_topo2_colormap_quality(self):
+        """Test visual quality aspects of TOPO2 colormap."""
+        from oceanvis_py.core.custom_colormaps import CUSTOM_COLORMAPS
+        import numpy as np
+
+        topo2_cmap = CUSTOM_COLORMAPS["TOPO2"]
+        
+        # Test color progression from deep (dark blue) to shallow (light)
+        colors = topo2_cmap(np.array([0, 0.5, 1.0]))
+        
+        # First color (deep ocean) should be dark blue-ish
+        deep_color = colors[0, :3]  # RGB only
+        assert deep_color[2] > deep_color[0] and deep_color[2] > deep_color[1], "Deep color should be blue-dominant"
+        
+        # Last color (shallow/land) should be lighter
+        shallow_color = colors[-1, :3]  # RGB only  
+        assert np.sum(shallow_color) > np.sum(deep_color), "Shallow color should be lighter than deep"
