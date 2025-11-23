@@ -18,7 +18,9 @@ This package provides tools for plotting CTD sections, LADCP velocity data, bath
    :maxdepth: 2
    :caption: Usage Examples
 
-   demo-output.ipynb
+   example_map_plot-output.ipynb
+   example_towyo-output.ipynb
+
 
 .. toctree::
    :maxdepth: 2

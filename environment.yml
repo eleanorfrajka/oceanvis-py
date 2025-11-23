@@ -5,6 +5,7 @@ channels:
 dependencies:
   - python>=3.9
   - pip
+  - pandoc  # Required for nbsphinx documentation builds
   - pip:
     - -r requirements.txt
     - -r requirements-dev.txt

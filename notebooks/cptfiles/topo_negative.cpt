@@ -1,0 +1,31 @@
+# Flemish Cap Bathymetry CPT - extracted from your map
+# Abyssal depths (darkest blue)
+-8000 #032d44 -7000 #032d44
+-7000 #2A5780 -6000 #2A5780
+-6000 #2A5780 -5000 #2A5780
+
+# Very deep (darker blue)
+-5000 #3E8AA4 -4000 #3E8AA4
+
+# Deep water (blue)
+-4000 #469AB2 -3000 #469AB2
+
+# Deep shelf edge (darker blue)
+-3000 #4FAEC5 -2000 #4FAEC5
+
+# Moderate depths (medium blue)
+-2000 #5DB9D2 -1000 #5DB9D2
+
+# Shallow continental shelf (light blue)
+-1000 #77C1D4 -500 #77C1D4
+-500 #94CBD1 -200 #94CBD1
+
+# Very shallow water (very light blue/cyan)  
+-200 #addbd1 0 #addbd1
+
+# Land/shallow areas (yellow/tan)
+0 #F7CE55 200 #F7CE55
+
+B #032d44 
+F #f4d03f
+N #ffffff
