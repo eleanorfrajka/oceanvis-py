@@ -8,12 +8,10 @@ import pandas as pd
 from pathlib import Path
 from typing import Optional, Union, Tuple, List
 
-
 def _check_pygmt_availability():
     """Check if PyGMT is available without importing it."""
     try:
         import importlib
-
         _pygmt_spec = importlib.util.find_spec("pygmt")
         return _pygmt_spec is not None
     except Exception:
@@ -28,7 +26,6 @@ def _require_pygmt():
     """Import and return pygmt or raise a clear error if unavailable."""
     try:
         import pygmt
-
         return pygmt
     except Exception:
         raise RuntimeError(
@@ -50,7 +47,7 @@ def plot_bathymetry_map(
     title: Optional[str] = None,
     return_figure: bool = False,
     invert_bathymetry: bool = True,
-    **kwargs,
+    **kwargs
 ) -> Union[str, tuple]:
     """Create a bathymetry map with optional ship track and contours.
 
@@ -130,14 +127,13 @@ def plot_bathymetry_map(
 
     # Load bathymetry data and optionally invert depths using xarray
     import xarray as xr
-
     try:
         ds = xr.open_dataset(bathymetry_file)
-        if "waterdepth" in ds:
+        if 'waterdepth' in ds:
             bathy_data = ds.waterdepth * (-1 if invert_bathymetry else 1)
         else:
             # Try other common depth variable names
-            depth_vars = ["depth", "elevation", "z", "topo"]
+            depth_vars = ['depth', 'elevation', 'z', 'topo']
             bathy_var = None
             for var in depth_vars:
                 if var in ds:
@@ -146,9 +142,7 @@ def plot_bathymetry_map(
             if bathy_var:
                 bathy_data = ds[bathy_var] * (-1 if invert_bathymetry else 1)
             else:
-                raise ValueError(
-                    f"Could not find depth variable in {bathymetry_file}. Available variables: {list(ds.data_vars.keys())}"
-                )
+                raise ValueError(f"Could not find depth variable in {bathymetry_file}. Available variables: {list(ds.data_vars.keys())}")
 
         # Save as temporary NetCDF file for PyGMT
         bathy_data.to_netcdf(temp_bathy)
@@ -158,17 +152,16 @@ def plot_bathymetry_map(
     # Set default colormap if not provided
     if cpt_file is None:
         from ..core.colormaps import get_bathymetry_colormap
-
         cpt_file = get_bathymetry_colormap("flemish_cap")
 
     # Create bathymetry image
     # Replicates: gmt grdimage data/bathy_negative.nc -R$xmin/$xmax/$ymin/$ymax -JM5i -Cantfiles/topo_negative.cpt -Bxa4f2 -Bya2f1 -BWSne
     grdimage_kwargs = {
-        "grid": temp_bathy,
-        "region": region,
-        "projection": projection,
-        "cmap": cpt_file,
-        "frame": ["xa4f2", "ya2f1", "WSne"],
+        'grid': temp_bathy,
+        'region': region,
+        'projection': projection,
+        'cmap': cpt_file,
+        'frame': ["xa4f2", "ya2f1", "WSne"]
     }
     grdimage_kwargs.update(kwargs)
     fig.grdimage(**grdimage_kwargs)
@@ -181,8 +174,8 @@ def plot_bathymetry_map(
             fig.grdcontour(
                 grid=contour_grid,
                 levels=contour_interval if contour_interval else 1000,
-                annotation="n",
-                pen="faint,100/100/100",
+                annotation=contour_interval if contour_interval else 1000,
+                pen="faint,100/100/100"
             )
         except Exception as e:
             print(f"Warning: Could not add contours: {e}")
@@ -190,7 +183,10 @@ def plot_bathymetry_map(
     # Add ship track if provided
     if ship_track_file and Path(ship_track_file).exists():
         try:
-            fig.plot(data=ship_track_file, pen="1p,220/20/20")
+            fig.plot(
+                data=ship_track_file,
+                pen="1p,220/20/20"
+            )
         except Exception as e:
             print(f"Warning: Could not plot ship track: {e}")
 
@@ -198,18 +194,21 @@ def plot_bathymetry_map(
     if title:
         west, east, south, north = region
         fig.text(
-            x=west, y=north, text=title, justify="BL", offset="0i/0.1i", no_clip=True
+            x=west, y=north,
+            text=title,
+            justify="BL",
+            offset="0i/0.1i",
+            no_clip=True
         )
 
-    # Add colorbar
-    # Replicates: gmt colorbar -Cantfiles/topo_negative.cpt -Dx5.25i/.75i+w3i/0.15i+v -Bx1000 -By+l"m"
-    ## UPDATE this to use the position x given by the projection width,
-    # and offset by 0.25i
-    # Compute the y-height (after w) based on the
-    # projection type and width?
+    # Add colorbar with robust positioning
+    # Use anchor-based positioning that works with any projection
     fig.colorbar(
-    #    cmap=cpt_file, position="x5.25i/0.75i+w3i/0.15i+v", frame=["x1000", "y+lm"]
-        cmap=cpt_file, position="n1.05/.1+w9/0.4+v", frame=["x1000", "y+lm"]
+        cmap=cpt_file,
+#        position="jMR+w+o-0.5c/0+v",  # Right side, 4cm wide, 0.5cm thick, 0.5cm offset
+#        position="n1.05/0.1+jB+w5+v",
+        position="jMR+v+o-1c/0+m",
+        frame=["x1000", "y+lm"]
     )
 
     # Save the figure if not returning for further modification
@@ -234,7 +233,7 @@ def create_ship_track_map(
     region: Optional[Tuple[float, float, float, float]] = None,
     output_file: str = "ship_track_map.png",
     invert_bathymetry: bool = True,
-    **kwargs,
+    **kwargs
 ) -> str:
     """Create a bathymetry map focused on a ship track.
 
@@ -266,16 +265,16 @@ def create_ship_track_map(
     if region is None:
         import pandas as pd
         import numpy as np
-
-        track_data = pd.read_csv(ship_track_file, sep=r"\s+", names=["lon", "lat"])
+        track_data = pd.read_csv(ship_track_file, sep=r'\s+',
+                                names=['lon', 'lat'])
 
         # Check that track data is valid
         if len(track_data) == 0:
             raise ValueError("Ship track file is empty")
 
         # Add buffer around track - use numpy for safer min/max
-        lon_values = track_data["lon"].values
-        lat_values = track_data["lat"].values
+        lon_values = track_data['lon'].values
+        lat_values = track_data['lat'].values
 
         lon_min, lon_max = float(np.min(lon_values)), float(np.max(lon_values))
         lat_min, lat_max = float(np.min(lat_values)), float(np.max(lat_values))
@@ -287,7 +286,7 @@ def create_ship_track_map(
             lon_min - lon_buffer,
             lon_max + lon_buffer,
             lat_min - lat_buffer,
-            lat_max + lat_buffer,
+            lat_max + lat_buffer
         )
 
     return plot_bathymetry_map(
@@ -296,7 +295,7 @@ def create_ship_track_map(
         ship_track_file=ship_track_file,
         output_file=output_file,
         invert_bathymetry=invert_bathymetry,
-        **kwargs,
+        **kwargs
     )
 
 
@@ -308,7 +307,7 @@ def plot_multi_track_map(
     track_labels: Optional[List[str]] = None,
     output_file: str = "multi_track_map.png",
     invert_bathymetry: bool = True,
-    **kwargs,
+    **kwargs
 ) -> str:
     """Create a bathymetry map with multiple ship tracks.
 
@@ -345,7 +344,7 @@ def plot_multi_track_map(
         output_file=output_file,
         return_figure=True,
         invert_bathymetry=invert_bathymetry,
-        **kwargs,
+        **kwargs
     )
 
     # Set default colors if not provided
@@ -357,22 +356,26 @@ def plot_multi_track_map(
         if Path(track_file).exists():
             color = track_colors[i % len(track_colors)]
             fig.plot(
-                data=str(track_file), pen=f"1p,{color}", region=region, projection="M5i"
+                data=str(track_file),
+                pen=f"1p,{color}",
+                region=region,
+                projection="M5i"
             )
 
             # Add label if provided
             if track_labels and i < len(track_labels):
                 # Position labels at start of each track
-                track_data = pd.read_csv(track_file, sep=r"\s+", names=["lon", "lat"])
+                track_data = pd.read_csv(track_file, sep=r'\s+',
+                                       names=['lon', 'lat'])
                 fig.text(
-                    x=track_data["lon"].iloc[0],
-                    y=track_data["lat"].iloc[0],
+                    x=track_data['lon'].iloc[0],
+                    y=track_data['lat'].iloc[0],
                     text=track_labels[i],
                     justify="BL",
-                    offset="0.1i/0.1i",
+                    offset="0.1i/0.1i"
                 )
 
-    fig.savefig(output_file, dpi=kwargs.get("dpi", 300))
+    fig.savefig(output_file, dpi=kwargs.get('dpi', 300))
 
     # Clean up temporary file
     try:
@@ -401,7 +404,7 @@ def plot_map(bathymetry_file: str, **kwargs) -> str:
 
     """
     # Default region if not provided
-    if "region" not in kwargs:
-        kwargs["region"] = (-180, 180, -90, 90)
+    if 'region' not in kwargs:
+        kwargs['region'] = (-180, 180, -90, 90)
 
     return plot_bathymetry_map(bathymetry_file, **kwargs)
