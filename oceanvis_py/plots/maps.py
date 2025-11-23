@@ -174,7 +174,7 @@ def plot_bathymetry_map(
             fig.grdcontour(
                 grid=contour_grid,
                 levels=contour_interval if contour_interval else 1000,
-                annotation=contour_interval if contour_interval else 1000,
+                annotation="n",
                 pen="faint,100/100/100"
             )
         except Exception as e:
