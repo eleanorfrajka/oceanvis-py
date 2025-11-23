@@ -83,15 +83,15 @@ TOPO_DATA = np.array(
 # Custom bathymetry colormap for deep ocean to land visualization
 TOPO_DATA2 = np.array(
     [
-        [3 / 255, 45 / 255, 68 / 255],    # Abyssal depths (#032d44)
-        [42 / 255, 87 / 255, 128 / 255],  # Very deep (#2A5780) 
-        [62 / 255, 138 / 255, 164 / 255], # Deep water (#3E8AA4)
-        [70 / 255, 154 / 255, 178 / 255], # Deep water (#469AB2)
-        [79 / 255, 174 / 255, 197 / 255], # Deep shelf edge (#4FAEC5)
-        [93 / 255, 185 / 255, 210 / 255], # Moderate depths (#5DB9D2)
-        [119 / 255, 193 / 255, 212 / 255], # Shallow continental shelf (#77C1D4)
-        [148 / 255, 203 / 255, 209 / 255], # Shallow shelf (#94CBD1)
-        [173 / 255, 219 / 255, 209 / 255], # Very shallow water (#addbd1)
+        [3 / 255, 45 / 255, 68 / 255],  # Abyssal depths (#032d44)
+        [42 / 255, 87 / 255, 128 / 255],  # Very deep (#2A5780)
+        [62 / 255, 138 / 255, 164 / 255],  # Deep water (#3E8AA4)
+        [70 / 255, 154 / 255, 178 / 255],  # Deep water (#469AB2)
+        [79 / 255, 174 / 255, 197 / 255],  # Deep shelf edge (#4FAEC5)
+        [93 / 255, 185 / 255, 210 / 255],  # Moderate depths (#5DB9D2)
+        [119 / 255, 193 / 255, 212 / 255],  # Shallow continental shelf (#77C1D4)
+        [148 / 255, 203 / 255, 209 / 255],  # Shallow shelf (#94CBD1)
+        [173 / 255, 219 / 255, 209 / 255],  # Very shallow water (#addbd1)
         [247 / 255, 206 / 255, 85 / 255],  # Land/shallow areas (#F7CE55)
     ]
 )

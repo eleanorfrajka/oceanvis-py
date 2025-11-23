@@ -227,7 +227,7 @@ class TestColormapUtilityFunctions:
         from pathlib import Path
 
         path = get_saved_colormap_path("topo_negative.cpt")
-        
+
         assert isinstance(path, Path)
         assert path.name == "topo_negative.cpt"
         assert "saved_colormaps" in str(path)
@@ -239,7 +239,7 @@ class TestColormapUtilityFunctions:
         from pathlib import Path
 
         path = get_saved_colormap_path("topo_negative")
-        
+
         assert isinstance(path, Path)
         assert path.name == "topo_negative.cpt"
         assert "saved_colormaps" in str(path)
@@ -264,7 +264,7 @@ class TestColormapUtilityFunctions:
 
         flemish_path = get_bathymetry_colormap("flemish_cap")
         topo2_path = get_bathymetry_colormap("topo2")
-        
+
         assert flemish_path == topo2_path
 
     def test_get_bathymetry_colormap_topo(self):
@@ -290,7 +290,9 @@ class TestColormapUtilityFunctions:
 
         # Test that flemish_cap colormap file exists
         flemish_path = get_bathymetry_colormap("flemish_cap")
-        assert Path(flemish_path).exists(), f"Flemish Cap colormap not found: {flemish_path}"
+        assert Path(
+            flemish_path
+        ).exists(), f"Flemish Cap colormap not found: {flemish_path}"
 
         # Note: We can't test topo.cpt existence since it might not be included yet
 
@@ -305,10 +307,10 @@ class TestTOPO2Colormap:
 
         assert "TOPO2" in CUSTOM_COLORMAPS
         topo2_cmap = CUSTOM_COLORMAPS["TOPO2"]
-        
+
         # Should be a function that returns colors
         assert callable(topo2_cmap)
-        
+
         # Test that it returns reasonable colors
         colors = topo2_cmap(np.linspace(0, 1, 10))
         assert colors.shape == (10, 4)  # RGBA format
@@ -321,7 +323,7 @@ class TestTOPO2Colormap:
         # Test that bathymetry and depth use TOPO2
         bathy_cmap = get_oceanographic_colormap("bathymetry")
         depth_cmap = get_oceanographic_colormap("depth")
-        
+
         assert hasattr(bathy_cmap, "name")
         assert hasattr(depth_cmap, "name")
         assert bathy_cmap.name == "TOPO2"
@@ -333,14 +335,18 @@ class TestTOPO2Colormap:
         import numpy as np
 
         topo2_cmap = CUSTOM_COLORMAPS["TOPO2"]
-        
+
         # Test color progression from deep (dark blue) to shallow (light)
         colors = topo2_cmap(np.array([0, 0.5, 1.0]))
-        
+
         # First color (deep ocean) should be dark blue-ish
         deep_color = colors[0, :3]  # RGB only
-        assert deep_color[2] > deep_color[0] and deep_color[2] > deep_color[1], "Deep color should be blue-dominant"
-        
+        assert (
+            deep_color[2] > deep_color[0] and deep_color[2] > deep_color[1]
+        ), "Deep color should be blue-dominant"
+
         # Last color (shallow/land) should be lighter
-        shallow_color = colors[-1, :3]  # RGB only  
-        assert np.sum(shallow_color) > np.sum(deep_color), "Shallow color should be lighter than deep"
+        shallow_color = colors[-1, :3]  # RGB only
+        assert np.sum(shallow_color) > np.sum(
+            deep_color
+        ), "Shallow color should be lighter than deep"
