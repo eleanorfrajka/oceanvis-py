@@ -254,7 +254,7 @@
             <span class="c1"># Replicates: gmt grdcontour data/coarse_topo.nc -C1000 -A- -Wfaint,100/100/100</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">grdcontour</span><span class="p">(</span>
                 <span class="n">grid</span><span class="o">=</span><span class="n">contour_grid</span><span class="p">,</span>
-                <span class="n">interval</span><span class="o">=</span><span class="n">contour_interval</span> <span class="k">if</span> <span class="n">contour_interval</span> <span class="k">else</span> <span class="mi">1000</span><span class="p">,</span>
+                <span class="n">levels</span><span class="o">=</span><span class="n">contour_interval</span> <span class="k">if</span> <span class="n">contour_interval</span> <span class="k">else</span> <span class="mi">1000</span><span class="p">,</span>
                 <span class="n">annotation</span><span class="o">=</span><span class="n">contour_interval</span> <span class="k">if</span> <span class="n">contour_interval</span> <span class="k">else</span> <span class="mi">1000</span><span class="p">,</span>
                 <span class="n">pen</span><span class="o">=</span><span class="s2">&quot;faint,100/100/100&quot;</span>
             <span class="p">)</span>
@@ -344,18 +344,29 @@
     <span class="c1"># Read ship track to determine region if not provided</span>
     <span class="k">if</span> <span class="n">region</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-        <span class="n">track_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">ship_track_file</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+        <span class="n">track_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">ship_track_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span>
                                 <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">])</span>
 
-        <span class="c1"># Add buffer around track</span>
-        <span class="n">lon_buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">*</span> <span class="mf">0.1</span>
-        <span class="n">lat_buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">*</span> <span class="mf">0.1</span>
+        <span class="c1"># Check that track data is valid</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">track_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Ship track file is empty&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Add buffer around track - use numpy for safer min/max</span>
+        <span class="n">lon_values</span> <span class="o">=</span> <span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">lat_values</span> <span class="o">=</span> <span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        
+        <span class="n">lon_min</span><span class="p">,</span> <span class="n">lon_max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lon_values</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lon_values</span><span class="p">))</span>
+        <span class="n">lat_min</span><span class="p">,</span> <span class="n">lat_max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lat_values</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lat_values</span><span class="p">))</span>
+        
+        <span class="n">lon_buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">lon_max</span> <span class="o">-</span> <span class="n">lon_min</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span>
+        <span class="n">lat_buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">lat_max</span> <span class="o">-</span> <span class="n">lat_min</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span>
 
         <span class="n">region</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="n">lon_buffer</span><span class="p">,</span>
-            <span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="n">lon_buffer</span><span class="p">,</span>
-            <span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="n">lat_buffer</span><span class="p">,</span>
-            <span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="n">lat_buffer</span>
+            <span class="n">lon_min</span> <span class="o">-</span> <span class="n">lon_buffer</span><span class="p">,</span>
+            <span class="n">lon_max</span> <span class="o">+</span> <span class="n">lon_buffer</span><span class="p">,</span>
+            <span class="n">lat_min</span> <span class="o">-</span> <span class="n">lat_buffer</span><span class="p">,</span>
+            <span class="n">lat_max</span> <span class="o">+</span> <span class="n">lat_buffer</span>
         <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">plot_bathymetry_map</span><span class="p">(</span>
@@ -433,7 +444,7 @@
             <span class="c1"># Add label if provided</span>
             <span class="k">if</span> <span class="n">track_labels</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">track_labels</span><span class="p">):</span>
                 <span class="c1"># Position labels at start of each track</span>
-                <span class="n">track_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">track_file</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">track_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">track_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span>
                                        <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">])</span>
                 <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
                     <span class="n">x</span><span class="o">=</span><span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
