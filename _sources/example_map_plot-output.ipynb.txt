@@ -21,10 +21,10 @@
    "id": "cell-1",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-11-23T07:50:18.288798Z",
-     "iopub.status.busy": "2025-11-23T07:50:18.288647Z",
-     "iopub.status.idle": "2025-11-23T07:50:19.899140Z",
-     "shell.execute_reply": "2025-11-23T07:50:19.898274Z"
+     "iopub.execute_input": "2025-11-23T10:33:15.383100Z",
+     "iopub.status.busy": "2025-11-23T10:33:15.382894Z",
+     "iopub.status.idle": "2025-11-23T10:33:17.836650Z",
+     "shell.execute_reply": "2025-11-23T10:33:17.835897Z"
     }
    },
    "outputs": [
@@ -170,10 +170,10 @@
    "id": "cell-2",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-11-23T07:50:19.901258Z",
-     "iopub.status.busy": "2025-11-23T07:50:19.900905Z",
-     "iopub.status.idle": "2025-11-23T07:50:19.921933Z",
-     "shell.execute_reply": "2025-11-23T07:50:19.921175Z"
+     "iopub.execute_input": "2025-11-23T10:33:17.838624Z",
+     "iopub.status.busy": "2025-11-23T10:33:17.838281Z",
+     "iopub.status.idle": "2025-11-23T10:33:17.859047Z",
+     "shell.execute_reply": "2025-11-23T10:33:17.858301Z"
     }
    },
    "outputs": [
@@ -242,10 +242,10 @@
    "id": "89192eca",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-11-23T07:50:19.923721Z",
-     "iopub.status.busy": "2025-11-23T07:50:19.923541Z",
-     "iopub.status.idle": "2025-11-23T07:50:19.930046Z",
-     "shell.execute_reply": "2025-11-23T07:50:19.929346Z"
+     "iopub.execute_input": "2025-11-23T10:33:17.860823Z",
+     "iopub.status.busy": "2025-11-23T10:33:17.860644Z",
+     "iopub.status.idle": "2025-11-23T10:33:17.867408Z",
+     "shell.execute_reply": "2025-11-23T10:33:17.866477Z"
     }
    },
    "outputs": [
@@ -294,6 +294,7 @@
     "            title=\"M212 cruise track\",\n",
     "            output_file=\"map_m212_with_track.png\",\n",
     "            dpi=300,\n",
+    "            invert_bathymetry=True,\n",
     "            return_figure=True\n",
     "        )\n",
     "\n",
@@ -327,6 +328,14 @@
     "    print(f\"Error: {e}\")\n",
     "    print(\"Check file paths and PyGMT installation\")"
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b34d9061",
+   "metadata": {},
+   "outputs": [],
+   "source": []
   }
  ],
  "metadata": {
