@@ -20,7 +20,7 @@ def _check_pygmt_test_availability():
         _pygmt_spec = importlib.util.find_spec("pygmt")
         if _pygmt_spec is not None:
             # Try to actually import to catch GMT library issues
-
+            import pygmt
             return True
     except Exception:
         pass

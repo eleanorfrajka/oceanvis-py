@@ -181,7 +181,7 @@ def plot_bathymetry_map(
             fig.grdcontour(
                 grid=contour_grid,
                 levels=contour_interval if contour_interval else 1000,
-                annotation=contour_interval if contour_interval else 1000,
+                annotation="n",
                 pen="faint,100/100/100",
             )
         except Exception as e:
@@ -203,8 +203,13 @@ def plot_bathymetry_map(
 
     # Add colorbar
     # Replicates: gmt colorbar -Cantfiles/topo_negative.cpt -Dx5.25i/.75i+w3i/0.15i+v -Bx1000 -By+l"m"
+    ## UPDATE this to use the position x given by the projection width,
+    # and offset by 0.25i
+    # Compute the y-height (after w) based on the
+    # projection type and width?
     fig.colorbar(
-        cmap=cpt_file, position="x5.25i/0.75i+w3i/0.15i+v", frame=["x1000", "y+lm"]
+    #    cmap=cpt_file, position="x5.25i/0.75i+w3i/0.15i+v", frame=["x1000", "y+lm"]
+        cmap=cpt_file, position="n1.05/.1+w9/0.4+v", frame=["x1000", "y+lm"]
     )
 
     # Save the figure if not returning for further modification
