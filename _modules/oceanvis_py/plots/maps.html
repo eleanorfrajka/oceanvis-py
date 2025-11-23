@@ -95,12 +95,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span>
 
-
 <span class="k">def</span><span class="w"> </span><span class="nf">_check_pygmt_availability</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if PyGMT is available without importing it.&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
-
         <span class="n">_pygmt_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pygmt&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">_pygmt_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -115,7 +113,6 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Import and return pygmt or raise a clear error if unavailable.&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">pygmt</span>
-
         <span class="k">return</span> <span class="n">pygmt</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
@@ -139,7 +136,7 @@
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">return_figure</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">invert_bathymetry</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a bathymetry map with optional ship track and contours.</span>
 
@@ -219,14 +216,13 @@
 
     <span class="c1"># Load bathymetry data and optionally invert depths using xarray</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
-
     <span class="k">try</span><span class="p">:</span>
         <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">bathymetry_file</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">&quot;waterdepth&quot;</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;waterdepth&#39;</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">:</span>
             <span class="n">bathy_data</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">waterdepth</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">invert_bathymetry</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Try other common depth variable names</span>
-            <span class="n">depth_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="s2">&quot;elevation&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;topo&quot;</span><span class="p">]</span>
+            <span class="n">depth_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">,</span> <span class="s1">&#39;elevation&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;topo&#39;</span><span class="p">]</span>
             <span class="n">bathy_var</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">depth_vars</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">:</span>
@@ -235,9 +231,7 @@
             <span class="k">if</span> <span class="n">bathy_var</span><span class="p">:</span>
                 <span class="n">bathy_data</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="n">bathy_var</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">invert_bathymetry</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Could not find depth variable in </span><span class="si">{</span><span class="n">bathymetry_file</span><span class="si">}</span><span class="s2">. Available variables: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">data_vars</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find depth variable in </span><span class="si">{</span><span class="n">bathymetry_file</span><span class="si">}</span><span class="s2">. Available variables: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">data_vars</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="c1"># Save as temporary NetCDF file for PyGMT</span>
         <span class="n">bathy_data</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">temp_bathy</span><span class="p">)</span>
@@ -247,17 +241,16 @@
     <span class="c1"># Set default colormap if not provided</span>
     <span class="k">if</span> <span class="n">cpt_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">..core.colormaps</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_bathymetry_colormap</span>
-
         <span class="n">cpt_file</span> <span class="o">=</span> <span class="n">get_bathymetry_colormap</span><span class="p">(</span><span class="s2">&quot;flemish_cap&quot;</span><span class="p">)</span>
 
     <span class="c1"># Create bathymetry image</span>
     <span class="c1"># Replicates: gmt grdimage data/bathy_negative.nc -R$xmin/$xmax/$ymin/$ymax -JM5i -Cantfiles/topo_negative.cpt -Bxa4f2 -Bya2f1 -BWSne</span>
     <span class="n">grdimage_kwargs</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;grid&quot;</span><span class="p">:</span> <span class="n">temp_bathy</span><span class="p">,</span>
-        <span class="s2">&quot;region&quot;</span><span class="p">:</span> <span class="n">region</span><span class="p">,</span>
-        <span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">projection</span><span class="p">,</span>
-        <span class="s2">&quot;cmap&quot;</span><span class="p">:</span> <span class="n">cpt_file</span><span class="p">,</span>
-        <span class="s2">&quot;frame&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;xa4f2&quot;</span><span class="p">,</span> <span class="s2">&quot;ya2f1&quot;</span><span class="p">,</span> <span class="s2">&quot;WSne&quot;</span><span class="p">],</span>
+        <span class="s1">&#39;grid&#39;</span><span class="p">:</span> <span class="n">temp_bathy</span><span class="p">,</span>
+        <span class="s1">&#39;region&#39;</span><span class="p">:</span> <span class="n">region</span><span class="p">,</span>
+        <span class="s1">&#39;projection&#39;</span><span class="p">:</span> <span class="n">projection</span><span class="p">,</span>
+        <span class="s1">&#39;cmap&#39;</span><span class="p">:</span> <span class="n">cpt_file</span><span class="p">,</span>
+        <span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;xa4f2&quot;</span><span class="p">,</span> <span class="s2">&quot;ya2f1&quot;</span><span class="p">,</span> <span class="s2">&quot;WSne&quot;</span><span class="p">]</span>
     <span class="p">}</span>
     <span class="n">grdimage_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">grdimage</span><span class="p">(</span><span class="o">**</span><span class="n">grdimage_kwargs</span><span class="p">)</span>
@@ -271,7 +264,7 @@
                 <span class="n">grid</span><span class="o">=</span><span class="n">contour_grid</span><span class="p">,</span>
                 <span class="n">levels</span><span class="o">=</span><span class="n">contour_interval</span> <span class="k">if</span> <span class="n">contour_interval</span> <span class="k">else</span> <span class="mi">1000</span><span class="p">,</span>
                 <span class="n">annotation</span><span class="o">=</span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
-                <span class="n">pen</span><span class="o">=</span><span class="s2">&quot;faint,100/100/100&quot;</span><span class="p">,</span>
+                <span class="n">pen</span><span class="o">=</span><span class="s2">&quot;faint,100/100/100&quot;</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Could not add contours: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -279,7 +272,10 @@
     <span class="c1"># Add ship track if provided</span>
     <span class="k">if</span> <span class="n">ship_track_file</span> <span class="ow">and</span> <span class="n">Path</span><span class="p">(</span><span class="n">ship_track_file</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">fig</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ship_track_file</span><span class="p">,</span> <span class="n">pen</span><span class="o">=</span><span class="s2">&quot;1p,220/20/20&quot;</span><span class="p">)</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">ship_track_file</span><span class="p">,</span>
+                <span class="n">pen</span><span class="o">=</span><span class="s2">&quot;1p,220/20/20&quot;</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Could not plot ship track: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -287,18 +283,21 @@
     <span class="k">if</span> <span class="n">title</span><span class="p">:</span>
         <span class="n">west</span><span class="p">,</span> <span class="n">east</span><span class="p">,</span> <span class="n">south</span><span class="p">,</span> <span class="n">north</span> <span class="o">=</span> <span class="n">region</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
-            <span class="n">x</span><span class="o">=</span><span class="n">west</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">north</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;BL&quot;</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="s2">&quot;0i/0.1i&quot;</span><span class="p">,</span> <span class="n">no_clip</span><span class="o">=</span><span class="kc">True</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">west</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">north</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;BL&quot;</span><span class="p">,</span>
+            <span class="n">offset</span><span class="o">=</span><span class="s2">&quot;0i/0.1i&quot;</span><span class="p">,</span>
+            <span class="n">no_clip</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">)</span>
 
-    <span class="c1"># Add colorbar</span>
-    <span class="c1"># Replicates: gmt colorbar -Cantfiles/topo_negative.cpt -Dx5.25i/.75i+w3i/0.15i+v -Bx1000 -By+l&quot;m&quot;</span>
-    <span class="c1">## UPDATE this to use the position x given by the projection width,</span>
-    <span class="c1"># and offset by 0.25i</span>
-    <span class="c1"># Compute the y-height (after w) based on the</span>
-    <span class="c1"># projection type and width?</span>
+    <span class="c1"># Add colorbar with robust positioning</span>
+    <span class="c1"># Use anchor-based positioning that works with any projection</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span>
-    <span class="c1">#    cmap=cpt_file, position=&quot;x5.25i/0.75i+w3i/0.15i+v&quot;, frame=[&quot;x1000&quot;, &quot;y+lm&quot;]</span>
-        <span class="n">cmap</span><span class="o">=</span><span class="n">cpt_file</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s2">&quot;n1.05/.1+w9/0.4+v&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x1000&quot;</span><span class="p">,</span> <span class="s2">&quot;y+lm&quot;</span><span class="p">]</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">cpt_file</span><span class="p">,</span>
+<span class="c1">#        position=&quot;jMR+w+o-0.5c/0+v&quot;,  # Right side, 4cm wide, 0.5cm thick, 0.5cm offset</span>
+<span class="c1">#        position=&quot;n1.05/0.1+jB+w5+v&quot;,</span>
+        <span class="n">position</span><span class="o">=</span><span class="s2">&quot;jMR+v+o-1c/0+m&quot;</span><span class="p">,</span>
+        <span class="n">frame</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x1000&quot;</span><span class="p">,</span> <span class="s2">&quot;y+lm&quot;</span><span class="p">]</span>
     <span class="p">)</span>
 
     <span class="c1"># Save the figure if not returning for further modification</span>
@@ -326,7 +325,7 @@
     <span class="n">region</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ship_track_map.png&quot;</span><span class="p">,</span>
     <span class="n">invert_bathymetry</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a bathymetry map focused on a ship track.</span>
 
@@ -358,16 +357,16 @@
     <span class="k">if</span> <span class="n">region</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-        <span class="n">track_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">ship_track_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lon&quot;</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">])</span>
+        <span class="n">track_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">ship_track_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span>
+                                <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">])</span>
 
         <span class="c1"># Check that track data is valid</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">track_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Ship track file is empty&quot;</span><span class="p">)</span>
 
         <span class="c1"># Add buffer around track - use numpy for safer min/max</span>
-        <span class="n">lon_values</span> <span class="o">=</span> <span class="n">track_data</span><span class="p">[</span><span class="s2">&quot;lon&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">lat_values</span> <span class="o">=</span> <span class="n">track_data</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">lon_values</span> <span class="o">=</span> <span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">lat_values</span> <span class="o">=</span> <span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
         <span class="n">lon_min</span><span class="p">,</span> <span class="n">lon_max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lon_values</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lon_values</span><span class="p">))</span>
         <span class="n">lat_min</span><span class="p">,</span> <span class="n">lat_max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lat_values</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lat_values</span><span class="p">))</span>
@@ -379,7 +378,7 @@
             <span class="n">lon_min</span> <span class="o">-</span> <span class="n">lon_buffer</span><span class="p">,</span>
             <span class="n">lon_max</span> <span class="o">+</span> <span class="n">lon_buffer</span><span class="p">,</span>
             <span class="n">lat_min</span> <span class="o">-</span> <span class="n">lat_buffer</span><span class="p">,</span>
-            <span class="n">lat_max</span> <span class="o">+</span> <span class="n">lat_buffer</span><span class="p">,</span>
+            <span class="n">lat_max</span> <span class="o">+</span> <span class="n">lat_buffer</span>
         <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">plot_bathymetry_map</span><span class="p">(</span>
@@ -388,7 +387,7 @@
         <span class="n">ship_track_file</span><span class="o">=</span><span class="n">ship_track_file</span><span class="p">,</span>
         <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">,</span>
         <span class="n">invert_bathymetry</span><span class="o">=</span><span class="n">invert_bathymetry</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">)</span></div>
 
 
@@ -403,7 +402,7 @@
     <span class="n">track_labels</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;multi_track_map.png&quot;</span><span class="p">,</span>
     <span class="n">invert_bathymetry</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a bathymetry map with multiple ship tracks.</span>
 
@@ -440,7 +439,7 @@
         <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">,</span>
         <span class="n">return_figure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">invert_bathymetry</span><span class="o">=</span><span class="n">invert_bathymetry</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">)</span>
 
     <span class="c1"># Set default colors if not provided</span>
@@ -452,22 +451,26 @@
         <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">track_file</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="n">color</span> <span class="o">=</span> <span class="n">track_colors</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">track_colors</span><span class="p">)]</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-                <span class="n">data</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">track_file</span><span class="p">),</span> <span class="n">pen</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;1p,</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;M5i&quot;</span>
+                <span class="n">data</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">track_file</span><span class="p">),</span>
+                <span class="n">pen</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;1p,</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span>
+                <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;M5i&quot;</span>
             <span class="p">)</span>
 
             <span class="c1"># Add label if provided</span>
             <span class="k">if</span> <span class="n">track_labels</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">track_labels</span><span class="p">):</span>
                 <span class="c1"># Position labels at start of each track</span>
-                <span class="n">track_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">track_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lon&quot;</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">])</span>
+                <span class="n">track_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">track_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span>
+                                       <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">])</span>
                 <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
-                    <span class="n">x</span><span class="o">=</span><span class="n">track_data</span><span class="p">[</span><span class="s2">&quot;lon&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                    <span class="n">y</span><span class="o">=</span><span class="n">track_data</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">x</span><span class="o">=</span><span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">y</span><span class="o">=</span><span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                     <span class="n">text</span><span class="o">=</span><span class="n">track_labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                     <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;BL&quot;</span><span class="p">,</span>
-                    <span class="n">offset</span><span class="o">=</span><span class="s2">&quot;0.1i/0.1i&quot;</span><span class="p">,</span>
+                    <span class="n">offset</span><span class="o">=</span><span class="s2">&quot;0.1i/0.1i&quot;</span>
                 <span class="p">)</span>
 
-    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dpi&quot;</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dpi&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
 
     <span class="c1"># Clean up temporary file</span>
     <span class="k">try</span><span class="p">:</span>
@@ -499,8 +502,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Default region if not provided</span>
-    <span class="k">if</span> <span class="s2">&quot;region&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;region&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;region&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">plot_bathymetry_map</span><span class="p">(</span><span class="n">bathymetry_file</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
