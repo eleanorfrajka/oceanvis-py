@@ -85,37 +85,40 @@
            <div itemprop="articleBody">
              
   <h1>Source code for oceanvis_py.plots.maps</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Bathymetry and track mapping functions using PyGMT.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Bathymetry and track mapping functions using PyGMT.</span>
 
 <span class="sd">This module provides functions for creating publication-quality bathymetry maps</span>
 <span class="sd">with optional ship track overlays and contour lines.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span>
 
-<span class="c1"># Check for PyGMT availability</span>
-<span class="n">HAVE_PYGMT</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
-    <span class="n">_pygmt_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pygmt&quot;</span><span class="p">)</span>
-    <span class="n">HAVE_PYGMT</span> <span class="o">=</span> <span class="n">_pygmt_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-    <span class="n">HAVE_PYGMT</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_pygmt_availability</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if PyGMT is available without importing it.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+        <span class="n">_pygmt_spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;pygmt&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_pygmt_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="c1"># Check for PyGMT availability at module level for backwards compatibility</span>
+<span class="n">HAVE_PYGMT</span> <span class="o">=</span> <span class="n">_check_pygmt_availability</span><span class="p">()</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_require_pygmt</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Import and return pygmt or raise a clear error if unavailable.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">HAVE_PYGMT</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">pygmt</span>
+        <span class="k">return</span> <span class="n">pygmt</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
             <span class="s2">&quot;PyGMT/GMT not available. Install &#39;gmt&#39; and &#39;pygmt&#39; (e.g., via conda-forge) &quot;</span>
             <span class="s2">&quot;to use PyGMT mapping functions.&quot;</span>
         <span class="p">)</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">pygmt</span>
-    <span class="k">return</span> <span class="n">pygmt</span>
 
 
 <div class="viewcode-block" id="plot_bathymetry_map">
@@ -132,10 +135,10 @@
     <span class="n">contour_interval</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">return_figure</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">invert_bathymetry</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a bathymetry map with optional ship track and contours.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a bathymetry map with optional ship track and contours.</span>
 
 <span class="sd">    This function replicates the functionality of a GMT script for creating</span>
 <span class="sd">    publication-quality bathymetry maps using PyGMT.</span>
@@ -162,6 +165,10 @@
 <span class="sd">        Contour interval in meters (default: 1000m)</span>
 <span class="sd">    title : str, optional</span>
 <span class="sd">        Map title</span>
+<span class="sd">    invert_bathymetry : bool, optional</span>
+<span class="sd">        Whether to multiply bathymetry data by -1 for depth sign correction.</span>
+<span class="sd">        True (default) converts positive depths to negative for standard topo colormap.</span>
+<span class="sd">        False keeps original depth sign.</span>
 <span class="sd">    **kwargs</span>
 <span class="sd">        Additional arguments passed to grdimage</span>
 
@@ -186,6 +193,7 @@
 <span class="sd">    ...     ship_track_file=&quot;ship_track.xy&quot;,</span>
 <span class="sd">    ...     title=&quot;M212 Cruise Track&quot;</span>
 <span class="sd">    ... )</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pygmt</span> <span class="o">=</span> <span class="n">_require_pygmt</span><span class="p">()</span>
 
@@ -202,16 +210,16 @@
     <span class="c1"># Create the figure</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">pygmt</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
 
-    <span class="c1"># Process bathymetry data - ensure negative depths for bathymetry</span>
+    <span class="c1"># Process bathymetry data with optional depth sign correction</span>
     <span class="c1"># This replicates: gmt grdmath input.nc?waterdepth -1 MUL = bathy_negative.nc</span>
-    <span class="n">temp_bathy</span> <span class="o">=</span> <span class="s2">&quot;temp_bathy_negative.nc&quot;</span>
+    <span class="n">temp_bathy</span> <span class="o">=</span> <span class="s2">&quot;temp_bathy_processed.nc&quot;</span>
 
-    <span class="c1"># Load bathymetry data and create negative depths using xarray</span>
+    <span class="c1"># Load bathymetry data and optionally invert depths using xarray</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">bathymetry_file</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;waterdepth&#39;</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">:</span>
-            <span class="n">bathy_negative</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">ds</span><span class="o">.</span><span class="n">waterdepth</span>
+            <span class="n">bathy_data</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">waterdepth</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">invert_bathymetry</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Try other common depth variable names</span>
             <span class="n">depth_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">,</span> <span class="s1">&#39;elevation&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;topo&#39;</span><span class="p">]</span>
@@ -221,12 +229,12 @@
                     <span class="n">bathy_var</span> <span class="o">=</span> <span class="n">var</span>
                     <span class="k">break</span>
             <span class="k">if</span> <span class="n">bathy_var</span><span class="p">:</span>
-                <span class="n">bathy_negative</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">ds</span><span class="p">[</span><span class="n">bathy_var</span><span class="p">]</span>
+                <span class="n">bathy_data</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="n">bathy_var</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">invert_bathymetry</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find depth variable in </span><span class="si">{</span><span class="n">bathymetry_file</span><span class="si">}</span><span class="s2">. Available variables: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">data_vars</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="c1"># Save as temporary NetCDF file for PyGMT</span>
-        <span class="n">bathy_negative</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">temp_bathy</span><span class="p">)</span>
+        <span class="n">bathy_data</span><span class="o">.</span><span class="n">to_netcdf</span><span class="p">(</span><span class="n">temp_bathy</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error processing bathymetry file </span><span class="si">{</span><span class="n">bathymetry_file</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -314,10 +322,10 @@
     <span class="n">bathymetry_file</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
     <span class="n">region</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ship_track_map.png&quot;</span><span class="p">,</span>
+    <span class="n">invert_bathymetry</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a bathymetry map focused on a ship track.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a bathymetry map focused on a ship track.</span>
 
 <span class="sd">    Convenience function that automatically determines the region from</span>
 <span class="sd">    the ship track data and creates a bathymetry map.</span>
@@ -332,6 +340,8 @@
 <span class="sd">        Map region. If None, automatically determined from track data</span>
 <span class="sd">    output_file : str, optional</span>
 <span class="sd">        Output filename</span>
+<span class="sd">    invert_bathymetry : bool, optional</span>
+<span class="sd">        Whether to multiply bathymetry data by -1 for depth sign correction</span>
 <span class="sd">    **kwargs</span>
 <span class="sd">        Additional arguments passed to plot_bathymetry_map</span>
 
@@ -339,8 +349,8 @@
 <span class="sd">    -------</span>
 <span class="sd">    str</span>
 <span class="sd">        Path to the created map file</span>
-<span class="sd">    &quot;&quot;&quot;</span>
 
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Read ship track to determine region if not provided</span>
     <span class="k">if</span> <span class="n">region</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -351,14 +361,14 @@
         <span class="c1"># Check that track data is valid</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">track_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Ship track file is empty&quot;</span><span class="p">)</span>
-        
+
         <span class="c1"># Add buffer around track - use numpy for safer min/max</span>
         <span class="n">lon_values</span> <span class="o">=</span> <span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
         <span class="n">lat_values</span> <span class="o">=</span> <span class="n">track_data</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        
+
         <span class="n">lon_min</span><span class="p">,</span> <span class="n">lon_max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lon_values</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lon_values</span><span class="p">))</span>
         <span class="n">lat_min</span><span class="p">,</span> <span class="n">lat_max</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lat_values</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lat_values</span><span class="p">))</span>
-        
+
         <span class="n">lon_buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">lon_max</span> <span class="o">-</span> <span class="n">lon_min</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span>
         <span class="n">lat_buffer</span> <span class="o">=</span> <span class="p">(</span><span class="n">lat_max</span> <span class="o">-</span> <span class="n">lat_min</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span>
 
@@ -374,6 +384,7 @@
         <span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span>
         <span class="n">ship_track_file</span><span class="o">=</span><span class="n">ship_track_file</span><span class="p">,</span>
         <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">,</span>
+        <span class="n">invert_bathymetry</span><span class="o">=</span><span class="n">invert_bathymetry</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">)</span></div>
 
@@ -388,10 +399,10 @@
     <span class="n">track_colors</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">track_labels</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;multi_track_map.png&quot;</span><span class="p">,</span>
+    <span class="n">invert_bathymetry</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a bathymetry map with multiple ship tracks.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a bathymetry map with multiple ship tracks.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -407,6 +418,8 @@
 <span class="sd">        Labels for each track</span>
 <span class="sd">    output_file : str, optional</span>
 <span class="sd">        Output filename</span>
+<span class="sd">    invert_bathymetry : bool, optional</span>
+<span class="sd">        Whether to multiply bathymetry data by -1 for depth sign correction</span>
 <span class="sd">    **kwargs</span>
 <span class="sd">        Additional arguments passed to plot_bathymetry_map</span>
 
@@ -414,8 +427,8 @@
 <span class="sd">    -------</span>
 <span class="sd">    str</span>
 <span class="sd">        Path to the created map file</span>
-<span class="sd">    &quot;&quot;&quot;</span>
 
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Create base bathymetry map without ship track, get figure for further modification</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">temp_bathy</span> <span class="o">=</span> <span class="n">plot_bathymetry_map</span><span class="p">(</span>
         <span class="n">bathymetry_file</span><span class="o">=</span><span class="n">bathymetry_file</span><span class="p">,</span>
@@ -423,6 +436,7 @@
         <span class="n">ship_track_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># We&#39;ll add tracks separately</span>
         <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">,</span>
         <span class="n">return_figure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">invert_bathymetry</span><span class="o">=</span><span class="n">invert_bathymetry</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">)</span>
 
@@ -455,7 +469,7 @@
                 <span class="p">)</span>
 
     <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dpi&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
-    
+
     <span class="c1"># Clean up temporary file</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">Path</span><span class="p">(</span><span class="n">temp_bathy</span><span class="p">)</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
@@ -470,8 +484,7 @@
 <div class="viewcode-block" id="plot_map">
 <a class="viewcode-back" href="../../../oceanvis_py.html#oceanvis_py.plots.maps.plot_map">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_map</span><span class="p">(</span><span class="n">bathymetry_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Legacy function - use plot_bathymetry_map instead.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Legacy function - use plot_bathymetry_map instead.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -484,6 +497,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    str</span>
 <span class="sd">        Path to the created map file</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Default region if not provided</span>
     <span class="k">if</span> <span class="s1">&#39;region&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>

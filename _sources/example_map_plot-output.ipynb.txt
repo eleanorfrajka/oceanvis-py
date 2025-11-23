@@ -21,10 +21,10 @@
    "id": "cell-1",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-11-23T07:14:29.435947Z",
-     "iopub.status.busy": "2025-11-23T07:14:29.435767Z",
-     "iopub.status.idle": "2025-11-23T07:14:32.473062Z",
-     "shell.execute_reply": "2025-11-23T07:14:32.472251Z"
+     "iopub.execute_input": "2025-11-23T07:50:18.288798Z",
+     "iopub.status.busy": "2025-11-23T07:50:18.288647Z",
+     "iopub.status.idle": "2025-11-23T07:50:19.899140Z",
+     "shell.execute_reply": "2025-11-23T07:50:19.898274Z"
     }
    },
    "outputs": [
@@ -170,10 +170,10 @@
    "id": "cell-2",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-11-23T07:14:32.474921Z",
-     "iopub.status.busy": "2025-11-23T07:14:32.474581Z",
-     "iopub.status.idle": "2025-11-23T07:14:32.495655Z",
-     "shell.execute_reply": "2025-11-23T07:14:32.494852Z"
+     "iopub.execute_input": "2025-11-23T07:50:19.901258Z",
+     "iopub.status.busy": "2025-11-23T07:50:19.900905Z",
+     "iopub.status.idle": "2025-11-23T07:50:19.921933Z",
+     "shell.execute_reply": "2025-11-23T07:50:19.921175Z"
     }
    },
    "outputs": [
@@ -181,8 +181,7 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Error: Error loading GMT shared library at 'libgmt.so'.\n",
-      "libgmt.so: cannot open shared object file: No such file or directory\n",
+      "Error: PyGMT/GMT not available. Install 'gmt' and 'pygmt' (e.g., via conda-forge) to use PyGMT mapping functions.\n",
       "Check that PyGMT is properly installed and the bathymetry file path is correct\n"
      ]
     }
@@ -243,10 +242,10 @@
    "id": "89192eca",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-11-23T07:14:32.497336Z",
-     "iopub.status.busy": "2025-11-23T07:14:32.497172Z",
-     "iopub.status.idle": "2025-11-23T07:14:32.503435Z",
-     "shell.execute_reply": "2025-11-23T07:14:32.502699Z"
+     "iopub.execute_input": "2025-11-23T07:50:19.923721Z",
+     "iopub.status.busy": "2025-11-23T07:50:19.923541Z",
+     "iopub.status.idle": "2025-11-23T07:50:19.930046Z",
+     "shell.execute_reply": "2025-11-23T07:50:19.929346Z"
     }
    },
    "outputs": [
